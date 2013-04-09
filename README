@@ -1,0 +1,11 @@
+GHI Providers
+=====================================
+
+Web Application to search and authorize members. 
+To be used by GHI Providers to verify membership.
+
+
+
+#This file will be packaged with your application, when using `play dist`.
+
+
