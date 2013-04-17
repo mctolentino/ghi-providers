@@ -18,7 +18,7 @@ public class Member extends WithHistory {
 
     private static final long serialVersionUID = 1L;
     @Id
-    public Long id;
+    public Integer id;
     @OneToOne
     public Person person;
     public Long payeeId;
@@ -36,13 +36,13 @@ public class Member extends WithHistory {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public SearchLog log;
 
-    public static Model.Finder<Long, Member> find = new Model.Finder<Long, Member>(Long.class, Member.class);
+    public static Model.Finder<Integer, Member> find = new Model.Finder<Integer, Member>(Integer.class, Member.class);
 
     public static List<Member> allMembers() {
         return Member.find.all();
     }
 
-    public static Member searchMemberById(Long id) {
+    public static Member searchMemberById(Integer id) {
         return Member.find.byId(id);
     }
 
@@ -74,17 +74,9 @@ public class Member extends WithHistory {
             this.update();
         }
 
-        // VerificationDetails vd = VerificationDetails.find.where()
-        // .eq("member", this)
-        // .findUnique();
-
         if (this.verificationDetails == null || this.verificationDetails.member == null) {
             this.saveNewVerificationDetails();
         }
-
-        // List<SecurityQuestion> ql = SecurityQuestion.find.where()
-        // .eq("member", this)
-        // .findList();
 
         if (this.securityQuestions == null || this.securityQuestions.size() == 0) {
             this.saveNewSecurityQuestion();

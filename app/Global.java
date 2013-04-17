@@ -1,8 +1,9 @@
+import java.util.Date;
 import java.util.List;
 
 import models.Member;
-import models.SearchLog;
 import models.User;
+import models.VerificationDetails;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -21,28 +22,38 @@ public class Global extends GlobalSettings {
         initializeSecurityQuestions();
     }
 
+    @SuppressWarnings("deprecation")
     private static void initializeVerificationDetails() {
 
-        List<SearchLog> logs = SearchLog.find.all();
-
-        for (SearchLog log : logs) {
-            if (log.member.verificationDetails == null) {
-                log.member.saveNewVerificationDetails();
-            }
-        }
+        Member m = Member.find.byId(1);
+        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013-1900, 03, 15), "N", null);
+        m.save();
+        m = Member.find.byId(2);
+        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013-1900, 03, 15), "Y", new Date(2013, 12, 17));
+        m.save();
+        m = Member.find.byId(3);
+        m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
+        m.save();
+        m = Member.find.byId(4);
+        m.verificationDetails = new VerificationDetails(m, "F", new Date(2013-1900, 03, 15), "N", null);
+        m.save();
+        m = Member.find.byId(5);
+        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013-1900, 03, 15), "N", null);
+        m.save();
 
         Logger.info("Verification Details: Initialized.");
     }
 
     private static void initializeSecurityQuestions() {
 
-        List<Member> members = Member.find.all();
+        // List<Member> members = Member.find.all();
 
-        for (Member member : members) {
-            if (member.securityQuestions == null || member.securityQuestions.size() == 0) {
-                member.saveNewSecurityQuestion();
-            }
-        }
+        // for (Member member : members) {
+        // if (member.securityQuestions == null ||
+        // member.securityQuestions.size() == 0) {
+        // member.saveNewSecurityQuestion();
+        // }
+        // }
 
         Logger.info("Security Questions: Initialized.");
     }

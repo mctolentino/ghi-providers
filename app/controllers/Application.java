@@ -16,7 +16,7 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result dashboard() {
-        return ok(dashboard.render(Member.allMembers(), User.find.byId(request().username()), form(SearchMember.class), SearchLog.findLatestSearches()));
+        return ok(dashboard.render(User.find.byId(request().username()), form(SearchMember.class), SearchLog.findLatestSearches()));
     }
 
     public static Result login() {
@@ -25,7 +25,7 @@ public class Application extends Controller {
 
     public static Result authenticate() {
         Form<Login> loginForm = form(Login.class).bindFromRequest();
-        
+
         if (loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {

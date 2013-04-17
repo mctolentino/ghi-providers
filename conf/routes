@@ -11,7 +11,7 @@ POST    /login                     controllers.Application.authenticate()
 GET     /dashboard                 controllers.Application.dashboard()
 POST    /dashboard                 controllers.Members.searchMember()
 
-GET     /member/:member            controllers.Members.viewMember(member: Long)
+GET     /member/:member            controllers.Members.viewMember(member: Integer)
 
 GET     /logout                    controllers.Application.logout()
 

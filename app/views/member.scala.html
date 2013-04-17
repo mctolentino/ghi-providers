@@ -1,67 +1,6 @@
 @(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)
- 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Blue Cross Client Portal - Member Information</title>
-<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/dashstyle.css")"/>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="@routes.Assets.at("javascripts/script.js")"></script>
-</head>
 
-<body>
-
-<!--START OF HEADER SECTION-->
-    <div id="header">
-        <div id="headercontent">
-            <div id="logo">
-                <a href="dashboard.html" style="display: block; width: 185px; height: 75px;"></a>
-            </div>
-
-            <div id="usernav">
-                <ul class="navigation">
-                    <li><a href="#" class="username"> @user.username </a></li>
-                    <li><img src="@routes.Assets.at("images/user-hr.png")"></li>
-                    <li>
-                        <a href="#" class="settings"><img src="@routes.Assets.at("images/user-gear.png")" border="0"></a>
-                        <div class="sub-nav-wrapper">
-                            <ul class="sub-nav">
-                                <li><a href="#" class="user-setting-icon">User Settings</a></li>
-                                <li> <a href="@routes.Application.logout()" class="user-logout-icon">Sign Out</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-<!--END OF HEADER SECTION-->
-
-<div class="clear"></div>
-
-<div id="container">    
-<!--START OF SEARCH FORM AT LEFT SIDEBAR-->
-@helper.form(routes.Members.searchMember) {
-    <div class="form">
-            <div class="clientlogo"><img src="@routes.Assets.at("images/acme-small.png")" width="54" height="76"></div>
-            
-            <p class="searchbox">&nbsp;<br>Please enter the Membership Code<br />to view full details.</p>
-            
-            <div class="login" align="right">
-                          
-                <input type="text" name="searchId"  placeholder="Enter Membership Code" class="searchcode" onchange="hideIcon(this);" value="@form("searchId").value"/>
-                
-                @if(flash.contains("error")) {
-                   <div class="error_message">@flash.get("error")</div>
-                }
-                
-                <input type="submit" class="submit" value="Find »" />
-            </div>
-            <br />
-    </div>
-}
-<!--END OF SEARCH FORM AT LEFT SIDEBAR-->  
+@main(user, form) {
 
 <div id="tabContaier">
     <ul class="tabs">
@@ -80,14 +19,14 @@
         <div id="personalinfo" class="tabContents">
             <img src="@routes.Assets.at("images/sample-member.jpg")" width="100" height="100" align="left" style="margin:30px 10px 0 0; border: 1px solid #cccccc; padding:4px;">
             <h1>@member.person.firstName @member.person.surname </h1>
-            <p>Profile last updated: @member.log </p>
+            <p>Profile last updated: @member.person.updateDate.format("MMM-dd-yyyy") </p>
             <br />
             
             <table>
             <tr>
                 <td>Membership Status:</td>
                 @if( member.verificationDetails.verifiedFlag == "N"){
-                <td><img class="verified" src="@routes.Assets.at("images/red-flag.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Not Verified</span></td>
+                <td><img class="verified" src="@routes.Assets.at("images/not-verified.png")" title="Verified Member" alt="Verified Member"> <span class="not-verified.png">Not Verified</span></td>
                 }
                 @if( member.verificationDetails.verifiedFlag == "Y"){
                 <td><img class="verified" src="@routes.Assets.at("images/verified.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Verified</span></td>
@@ -101,17 +40,17 @@
                         
             <tr>
                 <td>National ID:</td>
-                <td>001-002-003 </td>
+                <td>00000@member.id </td>
             </tr>
             
             <tr>
                 <td>Date of Birth:</td>
-                <td>@member.person.dob</td>
+                <td>@member.person.dob.format("MMM-dd-yyyy")</td>
             </tr>
             
             <tr>
                 <td>Start Date:</td>
-                <td> - </td>
+                <td> Jan - 1 - 2013 </td>
             </tr>
             
             <tr>
@@ -126,37 +65,37 @@
             
             <tr>
                 <td>Primary Insured:</td>
-                <td>$ xxx,xxx</td>
+                <td>$ 100,000</td>
             </tr>
             
             <tr>
                 <td>Sum Insured:</td>
-                <td>$ xxx,xxx</td>
+                <td>$ 100,000</td>
             </tr>
             
             <tr>
                 <td>VIP:</td>
-                <td> - </td>
+                <td> Yes </td>
             </tr>
             
             <tr>
                 <td>Last Search:</td>
-                <td> - </td>
+                <td> @member.log.searchDate.format("MMM-dd-yyyy") </td>
             </tr>
             
             <tr>
                 <td>Underwriter:</td>
-                <td> - </td>
+                <td> GHI </td>
             </tr>
             
             <tr>
                 <td>Next Renewal Date:</td>
-                <td> - </td>
+                <td> Dec-31-2013 </td>
             </tr>
             
             <tr>
                 <td>Last Renewal Date:</td>
-                <td> - </td>
+                <td> Dec-31-2015 </td>
             </tr>
             </table>
         </div>
@@ -168,10 +107,7 @@
             <tr>
                 <td>Full Mailing Address:</td>
                 <td>
-                #1 Street Name, Village Name<br>
-                Town (Makati Business District)<br>
-                Makati City<br>
-                Philippines 1100
+                
                 </td>
             </tr>
             
@@ -260,7 +196,7 @@
                 <!--SEND CODE VIA SMS-->
                 <td class="column1">
                     <h2 style="color:#ffffff;">SEND CODE TO MEMBER</h2>
-                    <p>Send a verification code to the member’s mobile phone to validate that his/her information is correct. </p>
+                    <p>Send a verification code to the member�s mobile phone to validate that his/her information is correct. </p>
                     <p>Mobile Number: [+phone number]</p>
                     <p>Receiving time may vary depending on network status.</p>
 
@@ -366,27 +302,7 @@
         });
     });
 </script>
-    
-<div class="clear"></div>
-
-<!--FOOTER SECTION-->   
-<div id="footer">
-    <div class="footer-about">
-        <p><a href="#">About</a> &nbsp; &nbsp; 
-        <a href="#">Help</a> &nbsp; &nbsp; 
-        <a href="#">Terms</a> &nbsp; &nbsp; 
-        <a href="#">Privacy</a> &nbsp; &nbsp; 
-        <a href="#">Contact Us</a></p>
-    </div>
-    
-    <div class="footer-copy">
-     <p>© 2013 <a href="http://www.portland-software.com" target="_blank">Portland Software</a> &nbsp; &nbsp; ∙ &nbsp; &nbsp; Powered by <a href="http://www.volenday.com" target="_blank">Volenday</a></p>
-    </div>
-</div>
-
-</body>
-</html>
-      
+}
 
 <br />
 <br />

@@ -30,12 +30,10 @@ public class SearchLog extends Model {
         this.searchDate = searchDate;
     }
 
-    
-
     public static List<SearchLog> findLatestSearches() {
         List<SearchLog> sl = find.fetch("member")
-        .order("searchDate desc")
-        .findList();
+                                 .order("searchDate desc")
+                                 .findList();
         return sl;
     }
 

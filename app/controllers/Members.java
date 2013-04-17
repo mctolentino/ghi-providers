@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Member;
-import models.SearchLog;
 import models.SecurityQuestion;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.dashboard;
 
 @Security.Authenticated(Secured.class)
 public class Members extends Controller {
@@ -27,14 +25,9 @@ public class Members extends Controller {
             Member result = Member.searchMemberById(searchMemberForm.get().searchId);
             if (result != null) {
                 memberList.add(result);
-            }
-
-            if (memberList.size() != 0) {
                 result.saveSearchAndVerificationDetails();
-                
-                List<SearchLog> sl = SearchLog.findLatestSearches();
 
-                return ok(dashboard.render(memberList, User.find.byId(request().username()), form(SearchMember.class), sl));
+                return ok(views.html.member.render(User.find.byId(request().username()), result, form(SearchMember.class), getRandomQuestion(result)));
             } else {
                 flash("error", "Member not found");
             }
@@ -44,7 +37,7 @@ public class Members extends Controller {
         return redirect(routes.Application.dashboard());
     }
 
-    public static Result viewMember(Long member) {
+    public static Result viewMember(Integer member) {
         Member m = Member.find.byId(member);
 
         if (m.verificationDetails == null) {
@@ -57,13 +50,13 @@ public class Members extends Controller {
         return ok(views.html.member.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
     }
 
-    private static SecurityQuestion getRandomQuestion(Member member){
-        int randomIndex = (int)(Math.random() * (member.securityQuestions.size()));
+    private static SecurityQuestion getRandomQuestion(Member member) {
+        int randomIndex = (int) (Math.random() * (member.securityQuestions.size()));
         return member.securityQuestions.get(randomIndex);
     }
-    
+
     public static class SearchMember {
-        public Long searchId;
+        public Integer searchId;
 
         public String validate() {
             if (searchId == null) {
@@ -73,5 +66,5 @@ public class Members extends Controller {
         }
 
     }
-    
+
 }

@@ -96,8 +96,8 @@
      titleId:
      genderCode: M
      maritalStatusId: 
-     surname: Fuller
-     firstName: Sean
+     surname: Bauer
+     firstName: Jill
      middleName: ""
      preferredName: ""
      dob: 1975-4-21
@@ -123,7 +123,7 @@
      titleId:
      genderCode: M
      maritalStatusId: 
-     surname: Melbourne
+     surname: Gwapito
      firstName: Ronald
      middleName: ""
      preferredName: ""
@@ -286,22 +286,46 @@
     question:  Name of you favorite teacher?
     answer: Pempenya Gulapa
 
+ - &vd1 !!models.VerificationDetails
+    member: *mem1
+    verifiedFlag: Y
+    verifiedDate: 2013-03-13
+    watchlistFlag: N
+    watchlistDate: null
+
+ - &vd2 !!models.VerificationDetails
+    member: *mem2
+    verifiedFlag: Y
+    verifiedDate: 2013-04-05
+    watchlistFlag: Y
+    watchlistDate: 2013-10-05
+
+ - &vd3 !!models.VerificationDetails
+    member: *mem3
+    verifiedFlag: F
+    verifiedDate: 2013-10-10
+    watchlistFlag: N
+    watchlistDate: null
+
+ - &vd4 !!models.VerificationDetails
+    member: *mem4
+    verifiedFlag: N
+    verifiedDate: null
+    watchlistFlag: N
+    watchlistDate: null	
+
  - !!models.SearchLog
     member: *mem1
-    searchDate: 2013-04-15
+    searchDate: 2013-04-16
 
  - !!models.SearchLog
     member: *mem2
-    searchDate: 2013-04-15
+    searchDate: 2013-04-16
 
  - !!models.SearchLog
     member: *mem3
-    searchDate: 2013-04-15
+    searchDate: 2013-04-16
 
  - !!models.SearchLog
     member: *mem4
-    searchDate: 2013-04-15
-
- - !!models.SearchLog
-    member: *mem5
-    searchDate: 2013-04-15
+    searchDate: 2013-04-16

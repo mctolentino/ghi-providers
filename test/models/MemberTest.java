@@ -31,17 +31,17 @@ public class MemberTest extends WithApplication {
         for (SearchLog log : sl) {
             System.out.println(log.member.id);
         }
-        
+
         assertEquals(3, sl.size());
 
     }
-    
+
     @Test
     public void addToSearchLatest() {
-        Member m = Member.find.byId(4L);
+        Member m = Member.find.byId(4);
         assertNull(m.verificationDetails);
         m.saveSearchAndVerificationDetails();
-        
+
         assertNotNull(m.log);
         assertNotNull(m.verificationDetails);
         assertNotNull(m.verificationDetails.verifiedFlag);

@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table member (
-  id                        bigint not null,
+  id                        integer not null,
   CREUSER                   bigint,
   CREDATE                   timestamp,
   UPDUSER                   bigint,
@@ -73,14 +73,14 @@ create table question (
 
 create table search_log (
   id                        integer not null,
-  member_id                 bigint,
+  member_id                 integer,
   search_date               timestamp,
   constraint pk_search_log primary key (id))
 ;
 
 create table security_question (
   id                        bigint not null,
-  member_id                 bigint,
+  member_id                 integer,
   question                  varchar(255),
   answer                    varchar(255),
   constraint pk_security_question primary key (id))
@@ -95,7 +95,7 @@ create table user (
 
 create table verification_details (
   id                        integer not null,
-  member_id                 bigint,
+  member_id                 integer,
   verified_flag             varchar(255),
   verified_date             timestamp,
   watchlist_flag            varchar(255),
