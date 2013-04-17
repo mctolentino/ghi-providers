@@ -20,6 +20,8 @@ public class Question extends Model {
 		this.question = question;
 	}
 
-	
+	public static Model.Finder<Long, Question> find = new Model.Finder<Long, Question>(
+            Long.class, Question.class);
+
 	
 }

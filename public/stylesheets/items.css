@@ -1,0 +1,173 @@
+@charset "utf-8";
+/* CSS Document */
+
+.sendcode-nonclick {
+	-moz-box-shadow:inset 0px 1px 2px -2px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 2px -2px #ffffff;
+	box-shadow:inset 0px 1px 2px -2px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e8e8e8), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #e8e8e8 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e8e8e8', endColorstr='#ededed');
+	background-color:#e8e8e8;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #e6e6e6;
+	display:inline-block;
+	color:#dedede;
+	font-family:'Open Sans', arial;
+	font-size:14px;
+	font-weight:normal;
+	padding:9px 20px;
+	text-decoration:none;
+	text-shadow:2px 1px 3px #ffffff;
+}
+
+.verify-nonclick {
+	-moz-box-shadow:inset 0px 1px 2px -2px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 2px -2px #ffffff;
+	box-shadow:inset 0px 1px 2px -2px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e8e8e8), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #e8e8e8 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e8e8e8', endColorstr='#ededed');
+	background-color:#e8e8e8;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #e6e6e6;
+	display:inline-block;
+	color:#dedede;
+	font-family: 'Open Sans', arial;
+	font-size:12px;
+	font-weight:normal;
+	padding:7px 14px;
+	text-decoration:none;
+	text-shadow:2px 1px 3px #ffffff;
+}
+
+.verifyanswer-nonclick {
+	-moz-box-shadow:inset 0px 1px 2px -2px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 2px -2px #ffffff;
+	box-shadow:inset 0px 1px 2px -2px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #e8e8e8), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #e8e8e8 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e8e8e8', endColorstr='#ededed');
+	background-color:#e8e8e8;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #e6e6e6;
+	display:inline-block;
+	color:#dedede;
+	font-family: 'Open Sans', arial;
+	font-size:12px;
+	font-weight:normal;
+	padding:6px 16px;
+	text-decoration:none;
+	text-shadow:2px 1px 3px #ffffff;
+}
+
+
+#code-processing {
+	width: 80px; height: 18px;
+	margin: 0 auto;
+    background-image: url('images/loading.gif');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 22px;
+	color: #333333;
+	text-align: center;
+	}
+
+#code-sent {
+	width: 40px; height: 12px;
+	margin: 0 auto;
+    background-image: url('images/verified.png');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 18px;
+	color: #009900;
+	text-align: center;
+	}
+
+#code-notsent {
+	width: 137px; height: 15px;
+	margin: 0 auto;
+    background-image: url('images/warning.png');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 10px;
+	color: #cc0000;
+	text-align: center;
+	}
+	
+#member-verified {
+	width: 230px; height: 12px;
+	margin: 0 auto;
+    background-image: url('images/verified.png');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 18px;
+	color: #009900;
+	text-align: center;
+	}
+
+#code-wrong {
+	width: 190px; height: 11px;
+	margin: 0 auto;
+    background-image: url('images/red-flag.png');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 10px;
+	color: #cc0000;
+	text-align: center;
+	}
+	
+#code-wrong-three {
+	width: 230px; height: 11px;
+	margin: 0 auto;
+    background-image: url('images/red-flag.png');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 10px;
+	color: #cc0000;
+	text-align: center;
+	}
+
+#answer-wrong {
+	width: 450px; height: 11px;
+	margin: 0 auto;
+    background-image: url('images/red-flag.png');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 10px;
+	color: #cc0000;
+	text-align: center;
+	}
+
+#answer-wrong-three {
+	width: 440px; height: 11px;
+	margin: 0 auto;
+    background-image: url('images/red-flag.png');
+    background-repeat: no-repeat;
+	font-family: 'Open Sans', Arial;
+	font-size: 11px;
+	font-style: italic;
+	text-indent: 10px;
+	color: #cc0000;
+	text-align: center;
+	}

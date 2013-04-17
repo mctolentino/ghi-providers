@@ -1,5 +1,16 @@
+ ### Users
+ - &client1 !!models.User
+    email:      client1@acme.com
+    username:   client1
+    password:   password
+
+ - &client2 !!models.User
+    email:      client2@acme.com
+    username:   client2
+    password:   password
+
  ### PERSON
- - &Marla !!models.Person
+ - &marla !!models.Person
      id: 001
      titleId:
      genderCode: F
@@ -26,7 +37,7 @@
      updateDate:   2012-12-14
      nationalId: C10-0001
  
- - &Tyler !!models.Person
+ - &tyler !!models.Person
      id: 002
      titleId:
      genderCode: M
@@ -53,25 +64,257 @@
      updateDate:   2012-01-01
      nationalId: C10-0002
  
+ - &jack !!models.Person
+     id: 003
+     titleId:
+     genderCode: M
+     maritalStatusId: 
+     surname: Bauer
+     firstName: Jack
+     middleName: ""
+     preferredName: ""
+     dob: 1979-3-12
+     phoneHome: 654-3210
+     phoneWork: ""
+     phoneMobile: 09297700500
+     phoneFax: ""
+     email: "" 
+     emailConfirmFlag: N
+     occupationCode: "" 
+     positionTitle:  "" 
+     deceasedDate:  
+     nhi:    "" 
+     activeFlag:  Y
+     createUserId:   0
+     createDate:   2012-01-01
+     updateUserId:   0
+     updateDate:   2012-01-01
+     nationalId: C10-0002
+
+ - &jill !!models.Person
+     id: 004
+     titleId:
+     genderCode: M
+     maritalStatusId: 
+     surname: Bauer
+     firstName: Jill
+     middleName: ""
+     preferredName: ""
+     dob: 1975-4-21
+     phoneHome: 654-3210
+     phoneWork: ""
+     phoneMobile: 09297700500
+     phoneFax: ""
+     email: "" 
+     emailConfirmFlag: N
+     occupationCode: "" 
+     positionTitle:  "" 
+     deceasedDate:  
+     nhi:    "" 
+     activeFlag:  Y
+     createUserId:   0
+     createDate:   2012-01-01
+     updateUserId:   0
+     updateDate:   2012-01-01
+     nationalId: C10-0002
+ 
+ - &ronald !!models.Person
+     id: 005
+     titleId:
+     genderCode: M
+     maritalStatusId: 
+     surname: Gwapito
+     firstName: Ronald
+     middleName: ""
+     preferredName: ""
+     dob: 1982-5-23
+     phoneHome: 654-3210
+     phoneWork: ""
+     phoneMobile: 09297700500
+     phoneFax: ""
+     email: "" 
+     emailConfirmFlag: N
+     occupationCode: "" 
+     positionTitle:  "" 
+     deceasedDate:  
+     nhi:    "" 
+     activeFlag:  Y
+     createUserId:   0
+     createDate:   2012-01-01
+     updateUserId:   0
+     updateDate:   2012-01-01
+     nationalId: C10-0002
+ 
  ### QUESTION
- - &Q1 !!models.Question
+ - &q1 !!models.Question
      id: 001
      question: What's your mother's maiden name?
  
- - &Q2 !!models.Question
+ - &q2 !!models.Question
      id: 002
      question: Where did you attend grade school?
  
- - &Q3 !!models.Question
+ - &q3 !!models.Question
      id: 003
      question: What's the name of your favorite pet?
  
- - &Q3 !!models.Question
+ - &q4 !!models.Question
      id: 004
      question: Who's your first crush?
  
  
- ### SECURITY_QUESTION
- 
  ### MEMBER
- 
+ - &mem1 !!models.Member
+    id: 001
+    person: *marla
+    payeeId: 
+    customerAccountId: 
+    providerId: 
+    emailCorrespondenceFlag: N
+    smokerFlag: Y
+
+ - &mem2 !!models.Member
+    id: 002
+    person: *tyler 
+    payeeId: 
+    customerAccountId: 
+    providerId: 
+    emailCorrespondenceFlag: N
+    smokerFlag: Y
+
+ - &mem3 !!models.Member
+    id: 003
+    person: *jack 
+    payeeId: 
+    customerAccountId: 
+    providerId: 
+    emailCorrespondenceFlag: N
+    smokerFlag: N
+
+ - &mem4 !!models.Member
+    id: 004
+    person: *jill 
+    payeeId: 
+    customerAccountId: 
+    providerId: 
+    emailCorrespondenceFlag: N
+    smokerFlag: N
+
+ - &mem5 !!models.Member
+    id: 005
+    person: *ronald 
+    payeeId: 
+    customerAccountId: 
+    providerId: 
+    emailCorrespondenceFlag: N
+    smokerFlag: N
+
+
+### SECURITY_QUESTION
+ - !!models.SecurityQuestion
+    member: *mem1
+    question:  What's your mother's maiden name?
+    answer: Felicidad Yupangco
+
+ - !!models.SecurityQuestion
+    member: *mem1
+    question:  What's your mother's surname?
+    answer: Yupangco
+
+ - !!models.SecurityQuestion
+    member: *mem1
+    question:  What's your favorite pet's name?
+    answer: Doggie
+
+ - !!models.SecurityQuestion
+    member: *mem2
+    question:  What's your mother's maiden name?
+    answer: Prosperidad Ignacio
+
+ - !!models.SecurityQuestion
+    member: *mem2
+    question:  Where's the birthplace of your father?
+    answer: Batangas
+
+ - !!models.SecurityQuestion
+    member: *mem2
+    question:  Name of you favorite teacher?
+    answer: Agua Tapia
+
+ - !!models.SecurityQuestion
+    member: *mem3
+    question:  What's your father's maiden name?
+    answer: Prospero Ignacia
+
+ - !!models.SecurityQuestion
+    member: *mem3
+    question:  Where's the birthplace of your father?
+    answer: Bulacan
+
+ - !!models.SecurityQuestion
+    member: *mem3
+    question:  Name of you favorite teacher?
+    answer: Ms. Tapia
+
+ - !!models.SecurityQuestion
+    member: *mem4
+    question:  What's your mother's maiden name?
+    answer: Felicidad Yuhico
+
+ - !!models.SecurityQuestion
+    member: *mem4
+    question:  Where's the birthplace of your father?
+    answer: Aparri
+
+ - !!models.SecurityQuestion
+    member: *mem4
+    question:  Name of you favorite teacher?
+    answer: Agua Tapia
+
+ - !!models.SecurityQuestion
+    member: *mem5
+    question:  What's your mother's maiden name?
+    answer: Della Feliciano
+
+ - !!models.SecurityQuestion
+    member: *mem5
+    question:  Where's the birthplace of your father?
+    answer: Jolo, Sulu
+
+ - !!models.SecurityQuestion
+    member: *mem5
+    question:  Name of you favorite teacher?
+    answer: Pempenya Gulapa
+
+ - &vd1 !!models.VerificationDetails
+    member: *mem1
+    verifiedFlag: false
+    verifiedDate: null
+    watchlistFlag: false
+    watchlistDate: null
+
+ - &vd2 !!models.VerificationDetails
+    member: *mem2
+    verifiedFlag: false
+    verifiedDate: null
+    watchlistFlag: false
+    watchlistDate: null
+
+ - &vd3 !!models.VerificationDetails
+    member: *mem3
+    verifiedFlag: false
+    verifiedDate: null
+    watchlistFlag: false
+    watchlistDate: null
+
+ - !!models.SearchLog
+    member: *mem1
+    searchDate: 2013-04-16
+
+ - !!models.SearchLog
+    member: *mem2
+    searchDate: 2013-04-16
+
+ - !!models.SearchLog
+    member: *mem3
+    searchDate: 2013-04-16

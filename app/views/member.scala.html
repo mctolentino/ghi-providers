@@ -1,0 +1,396 @@
+@(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)
+ 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Blue Cross Client Portal - Member Information</title>
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/dashstyle.css")"/>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/script.js")"></script>
+</head>
+
+<body>
+
+<!--START OF HEADER SECTION-->
+    <div id="header">
+        <div id="headercontent">
+            <div id="logo">
+                <a href="dashboard.html" style="display: block; width: 185px; height: 75px;"></a>
+            </div>
+
+            <div id="usernav">
+                <ul class="navigation">
+                    <li><a href="#" class="username"> @user.username </a></li>
+                    <li><img src="@routes.Assets.at("images/user-hr.png")"></li>
+                    <li>
+                        <a href="#" class="settings"><img src="@routes.Assets.at("images/user-gear.png")" border="0"></a>
+                        <div class="sub-nav-wrapper">
+                            <ul class="sub-nav">
+                                <li><a href="#" class="user-setting-icon">User Settings</a></li>
+                                <li> <a href="@routes.Application.logout()" class="user-logout-icon">Sign Out</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<!--END OF HEADER SECTION-->
+
+<div class="clear"></div>
+
+<div id="container">    
+<!--START OF SEARCH FORM AT LEFT SIDEBAR-->
+@helper.form(routes.Members.searchMember) {
+    <div class="form">
+            <div class="clientlogo"><img src="@routes.Assets.at("images/acme-small.png")" width="54" height="76"></div>
+            
+            <p class="searchbox">&nbsp;<br>Please enter the Membership Code<br />to view full details.</p>
+            
+            <div class="login" align="right">
+                          
+                <input type="text" name="searchId"  placeholder="Enter Membership Code" class="searchcode" onchange="hideIcon(this);" value="@form("searchId").value"/>
+                
+                @if(flash.contains("error")) {
+                   <div class="error_message">@flash.get("error")</div>
+                }
+                
+                <input type="submit" class="submit" value="Find »" />
+            </div>
+            <br />
+    </div>
+}
+<!--END OF SEARCH FORM AT LEFT SIDEBAR-->  
+
+<div id="tabContaier">
+    <ul class="tabs">
+
+<!--MEMBER INFO CATEGORIES-->
+        <li class="tabs"><a class="active" href="#personalinfo">Personal Information</a></li>
+        <li class="tabs"><a href="#contactdetails">Contact Details</a></li>
+        <li class="tabs"><a href="#groupinfo">Group Information</a></li>
+        <li class="tabs"><a href="#claims">Claims</a></li>
+        <li class="tabs"><a href="#authentication">Authentication</a></li>
+    </ul>
+    
+    <div class="tabDetails">
+    
+<!--PERSONAL INFORMATION CONTENT-->
+        <div id="personalinfo" class="tabContents">
+            <img src="@routes.Assets.at("images/sample-member.jpg")" width="100" height="100" align="left" style="margin:30px 10px 0 0; border: 1px solid #cccccc; padding:4px;">
+            <h1>@member.person.firstName @member.person.surname </h1>
+            <p>Profile last updated: @member.log </p>
+            <br />
+            
+            <table>
+            <tr>
+                <td>Membership Status:</td>
+                @if( member.verificationDetails.verifiedFlag == "N"){
+                <td><img class="verified" src="@routes.Assets.at("images/red-flag.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Not Verified</span></td>
+                }
+                @if( member.verificationDetails.verifiedFlag == "Y"){
+                <td><img class="verified" src="@routes.Assets.at("images/verified.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Verified</span></td>
+                }
+            </tr>
+            
+            <tr>
+                <td>Membership Code:</td>
+                <td>@member.id</td>
+            </tr>
+                        
+            <tr>
+                <td>National ID:</td>
+                <td>001-002-003 </td>
+            </tr>
+            
+            <tr>
+                <td>Date of Birth:</td>
+                <td>@member.person.dob</td>
+            </tr>
+            
+            <tr>
+                <td>Start Date:</td>
+                <td> - </td>
+            </tr>
+            
+            <tr>
+                <td>End Date:</td>
+                <td> - </td>
+            </tr>
+            
+            <tr>
+                <td>Policy Type:</td>
+                <td>Basic</td>
+            </tr>
+            
+            <tr>
+                <td>Primary Insured:</td>
+                <td>$ xxx,xxx</td>
+            </tr>
+            
+            <tr>
+                <td>Sum Insured:</td>
+                <td>$ xxx,xxx</td>
+            </tr>
+            
+            <tr>
+                <td>VIP:</td>
+                <td> - </td>
+            </tr>
+            
+            <tr>
+                <td>Last Search:</td>
+                <td> - </td>
+            </tr>
+            
+            <tr>
+                <td>Underwriter:</td>
+                <td> - </td>
+            </tr>
+            
+            <tr>
+                <td>Next Renewal Date:</td>
+                <td> - </td>
+            </tr>
+            
+            <tr>
+                <td>Last Renewal Date:</td>
+                <td> - </td>
+            </tr>
+            </table>
+        </div>
+        
+<!--CONTACT DETAILS CONTENT-->
+        <div id="contactdetails" class="tabContents">
+            
+            <table>
+            <tr>
+                <td>Full Mailing Address:</td>
+                <td>
+                #1 Street Name, Village Name<br>
+                Town (Makati Business District)<br>
+                Makati City<br>
+                Philippines 1100
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Home Number:</td>
+                <td>@member.person.phoneHome</td>
+            </tr>
+            
+            <tr>
+                <td>Fax Number: </td>
+                <td>@member.person.phoneFax</td>
+            </tr>
+            
+            <tr>
+                <td>Work Number:</td>
+                <td>@member.person.phoneWork</td>
+            </tr>
+            
+            <tr>
+                <td>Mobile Number:</td>
+                <td>@member.person.phoneMobile</td>
+            </tr>
+            
+            <tr>
+                <td>Email Address:</td>
+                <td>@member.person.email</td>
+            </tr>
+            </table>
+        </div>
+        
+
+<!--GROUP INFORMATION CONTENT-->
+        <div id="groupinfo" class="tabContents">
+            
+            <table>
+            <tr>
+                <td>Group Name:</td>
+                <td>GROUP NAME</td>
+            </tr>
+            
+            <tr>
+                <td>Group Plan Name:</td>
+                <td>Group Plan Name</td>
+            </tr>
+            
+            <tr>
+                <td>Primary Advisor:</td>
+                <td>Advisor Name</td>
+            </tr>
+            </table>
+        </div>
+        
+        
+<!--CLAIMS INFORMATION CONTENT-->
+        <div id="claims" class="tabContents">
+                    
+            <table>
+            <tr>
+                <td>Date Last Prior Approval Submitted:</td>
+                <td>Status</td>
+            </tr>
+            
+            <tr>
+                <td>Date Last Claim Submitted:</td>
+                <td>Status</td>
+            </tr>
+            </table>
+        </div>
+        
+        
+<!--AUTHENTICATION STEPS CONTENT-->
+        <div id="authentication" class="tabContents">
+            <br /><br />
+            <div class="verifysteps">
+                <img src="@routes.Assets.at("images/mobile-active.png")" class="pull-left" width="155" height="90">
+                <img src="@routes.Assets.at("images/question-active.png")" class="pull-right" width="124" height="93">
+                <img src="@routes.Assets.at("images/right-arrow.png")" class="verifysteps-rightarrow">
+            </div>
+            <br />
+
+           <table id="authen">
+            <tr>
+
+<!--FIRST STEP MOBILE AUTHENTICATION-->
+
+                <!--SEND CODE VIA SMS-->
+                <td class="column1">
+                    <h2 style="color:#ffffff;">SEND CODE TO MEMBER</h2>
+                    <p>Send a verification code to the member’s mobile phone to validate that his/her information is correct. </p>
+                    <p>Mobile Number: [+phone number]</p>
+                    <p>Receiving time may vary depending on network status.</p>
+
+                    <div class="pull-center"><a href="#" class="sendcode" onclick="showprocess('code-processing')">SEND CODE</a></div><br />
+                    
+                    <div id="code-processing">Processing.</div>
+                </td>
+
+                <!--AUTHENTICATE CODE-->
+                <td class="column2">
+                <h2>ENTER CODE TO VERIFY</h2>
+                <p>Enter below the verification code received by the member via SMS.</p>
+                        
+                    <form class="search_field" method="GET">
+                    <label>Verification Code:</label><br><input name="q" maxlength="6">
+                    <a href="#" class="verifycode" onclick="showprocess('code-verifying')">VERIFY</a>
+                    </form><br />
+
+                    <div id="code-verifying">Processing.</div>
+
+                <h2>Having trouble?</h2>
+                    <form class="failedsms">
+                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="nophone" onclick="showstuff('question-step');">Member does not have a mobile phone.</span><br>
+                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="changenumber" onclick="showstuff('question-step');">Member recently changed his/her number.</span><br>
+                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="wrongcode" onclick="showstuff('question-step');">Code entered is wrong.</span><br>
+                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="nosms" onclick="showstuff('question-step');">Code was sent but member didn't receive SMS.</span>
+                    </form>
+                
+                </td>
+            </tr>
+            </table><br />
+
+            
+<!--HIDDEN LINK TO SECURITY QUESTION-->
+            <div id="question-step">
+            <a href="#" onclick="showauthentication('securityquestion'); hideauthentication('authen'); hideprocess('answer-verifying'); 
+            hideprocess('code-processing'); hidesmsverifying('code-verifying');this.parentNode.style.display = 'none'">Proceed to Security Question &rarr;</a>
+            </div>
+
+<!--HIDDEN LINK BACK TO DASHBOARD IF MEMBER IS VERIFIED-->
+            <div id="back-dashboard">
+            <a href="dashboard.html">Go Back to Dashboard &rarr;</a>
+            </div>
+
+
+<!--SECOND STEP SECURITY QUESTION AUTHENTICATION-->         
+        
+        <div id="securityquestion">
+            <hr class="hr">
+            <h2>Security Question for Member</h2>
+            <p>Ask member the following security question and enter his/her given answer. <br>
+            <span style="color: #b3b3b3;">The security question is randomly picked from a list of questions the member has selected during application. </span> <span style="color: #fe7223;">Please check the spelling before clicking Verify.</span>
+            </p><br/>
+        
+            <p><b>@question.question</b></p>
+        
+            <form class="securityanswer_field">
+            <label>Answer:</label><br><input name="answer" id="answerField" maxlength="30">
+            <a href="#" class="verifyanswer" onclick="validateAnswer(); return false;">VERIFY</a>
+            </form><br /><br />
+
+            <div id="answer-verifying">Processing.</div>
+            <div id="answer-verified" style="visibility: hidden; color: green;" class="verified">Verified.</div>
+            <div id="answer-incorrect" style="visibility: hidden; color: red;">Answer is incorrect.</div>
+            <script type="text/javascript">
+            
+            function validateAnswer(){
+                hideprocess('answer-verifying');
+                hideprocess('answer-verified');
+                hideprocess('answer-incorrect');
+                showprocess('answer-verifying');
+                answer = document.getElementById('answerField');
+                if( answer.value == '@question.answer' ){
+                    hideprocess('answer-verifying');
+                    showprocess('answer-verified');
+                    hideprocess('answer-incorrectg');
+                }else{
+                    hideprocess('answer-verifying');
+                    hideprocess('answer-verified');
+                    showprocess('answer-incorrect');
+                   
+                }
+                return false;
+            }
+            </script>
+        </div>
+            
+        </div>
+    </div><!-- //tab Details -->
+</div><!-- //Tab Container -->
+
+<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.4.2.min.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".tabContents").hide(); // Hide all tab conten divs by default
+        $(".tabContents:first").show(); // Show the first div of tab content by default
+        $("#tabContaier ul li a").click(function(){ //Fire the click event
+            var activeTab = $(this).attr("href"); // Catch the click link
+            $("#tabContaier ul li a").removeClass("active"); // Remove pre-highlighted link
+            $(this).addClass("active"); // set clicked link to highlight state
+            $(".tabContents").hide(); // hide currently visible tab content div
+            $(activeTab).fadeIn(); // show the target tab content div by matching clicked link.
+        });
+    });
+</script>
+    
+<div class="clear"></div>
+
+<!--FOOTER SECTION-->   
+<div id="footer">
+    <div class="footer-about">
+        <p><a href="#">About</a> &nbsp; &nbsp; 
+        <a href="#">Help</a> &nbsp; &nbsp; 
+        <a href="#">Terms</a> &nbsp; &nbsp; 
+        <a href="#">Privacy</a> &nbsp; &nbsp; 
+        <a href="#">Contact Us</a></p>
+    </div>
+    
+    <div class="footer-copy">
+     <p>© 2013 <a href="http://www.portland-software.com" target="_blank">Portland Software</a> &nbsp; &nbsp; ∙ &nbsp; &nbsp; Powered by <a href="http://www.volenday.com" target="_blank">Volenday</a></p>
+    </div>
+</div>
+
+</body>
+</html>
+      
+
+<br />
+<br />
+@for( question <- member.securityQuestions ){
+    @question.question @question.answer
+    <br />
+}

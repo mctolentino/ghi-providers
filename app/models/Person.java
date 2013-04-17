@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import play.data.format.Formats;
 import play.db.ebean.Model;
 
 @Entity
@@ -21,6 +22,7 @@ public class Person extends WithHistory {
 	public String firstName;
 	public String middleName;
 	public String preferredName;
+	@Formats.DateTime(pattern="dd/MM/yyyy")
 	public Date dob;
 	public String phoneHome;
 	public String phoneWork;
