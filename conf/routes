@@ -16,7 +16,9 @@ GET     /logout                    controllers.Application.logout()
 
 
 GET   /member/validate/:id          controllers.Members.validateMember(id:Integer)
-GET   /member/validate/:id/:code    controllers.Members.checkChallengeCode(id:Integer, code:String)
+GET   /member/check/:id             controllers.Members.checkChallengeCode(id:Integer)
+
+#POST   /member/validate/challenge/code     controllers.Members.checkChallengeCode
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

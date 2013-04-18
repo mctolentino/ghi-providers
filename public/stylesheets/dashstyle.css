@@ -917,7 +917,7 @@ table#authen tr:last-child td:last-child {
 	width: 80px; height: 18px;
 	margin: 0 auto;
 	visibility: hidden;
-    background-image: url('images/loading.gif');
+    background-image: url('../images/loading.gif');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -931,7 +931,7 @@ table#authen tr:last-child td:last-child {
 	width: 80px; height: 18px;
 	margin: 0 auto; margin-top:8px;
 	visibility: hidden;
-    background-image: url('images/loading.gif');
+    background-image: url('../images/loading.gif');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -1043,7 +1043,7 @@ table#authen tr:last-child td:last-child {
 	height: 18px;
 	margin: 0 auto; 
 	visibility: hidden;
-    background-image: url('images/loading.gif');
+    background-image: url('../images/loading.gif');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -1065,3 +1065,11 @@ table#authen tr:last-child td:last-child {
 	border-top-left-radius:6px;
 	padding:20px; text-align:center;
 	}
+	
+.error_message { 
+    font-family:Arial, sans-serif; 
+    font-size:11px; 
+    color:#ff6666; 
+    text-align: center; 
+    margin:10px 20px 1px 20px;
+    }

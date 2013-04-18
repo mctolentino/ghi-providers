@@ -18,22 +18,14 @@ public class ChallengeCode extends Model {
 
     public static boolean saveChallengeCode(Member member) {
 
-        //ChallengeCode test = find.where().eq("member.id", member.id).findUnique();
         
         ChallengeCode cc = new ChallengeCode();
         cc.member = member;
         cc.challengeCode = "0000";
         cc.save();    
         
-//        if(test == null ){
-//            ChallengeCode cc = new ChallengeCode();
-//            cc.member = member;
-//            cc.challengeCode = "0000";
-//            cc.save();    
-//        }else{
-//            test.challengeCode = "0000";
-//            test.update();
-//        }
         return true;
     }
+    
+    
 }

@@ -1,4 +1,4 @@
-@(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)
+@(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion, cForm:Form[Members.ValidateChallengeCode])
 
 @main(user, form, "GHI+ Client Portal - Member Information") {
 
@@ -196,7 +196,7 @@
                 <td class="column1">
                     <h2 style="color:#ffffff;">SEND CODE TO MEMBER</h2>
                     <p>Send a verification code to the member’s mobile phone to validate that his/her information is correct. </p>
-                    <p>Mobile Number: [+phone number]</p>
+                    <p>Mobile Number: [@member.person.phoneMobile]</p>
                     <p>Receiving time may vary depending on network status.</p>
 
                     <div class="pull-center"><a href="@routes.Members.validateMember(member.id)" id="sendCodeButton" onclick="showprocess('code-processing');" class="sendcode">SEND CODE</a></div><br />
@@ -211,37 +211,40 @@
                                     return false;
                                 }
                         );
-                        
                     </script>
                     
-                    
                     <div id="code-processing">Processing.</div>
-                    <div id="sendcoderesult" style="border: 1px solid black; padding: 5px;">not sent yet...</div>
+                    <div id="sendcoderesult" style="padding: 5px;"> </div>
                 </td>
 
                 <!--AUTHENTICATE CODE-->
                 <td class="column2">
                 <h2>ENTER CODE TO VERIFY</h2>
                 <p>Enter below the verification code received by the member via SMS.</p>
-                        
-                    <form class="search_field" method="GET">
-                    <label>Verification Code:</label><br /><input name="q" maxlength="6">
-                    <a href="/member/validate/@member.id/0000" id="checkCodeButton"  class="verifycode" onclick="showprocess('code-verifying');return false;">VERIFY</a>
-                    </form><br />
-                    <div id="code-verifying">Processing.</div>
-                    <div id="ccresult">Test: </div>
-                     <script type="text/javascript">
-                        jQuery("#checkCodeButton").click(
-                                function () {
-                                    $.get(jQuery(this).attr("href"), function (data) {
-                                        $('#ccresult').html(data);
-                                    });
-                                    hideprocess('code-processing');
-                                    return false;
-                                }
-                        );
-                        
-                    </script>
+                    
+                      
+                    <form class="search_field" id="cform">
+                        <label>Verification Code:</label>
+                        <br />
+                            <input type="text" name="challengeCode" id="ccField" maxlength="6" />
+                            <a id="checkCodeButton"  class="verifycode" onclick="return false;">VERIFY</a>
+                    </form>
+                    
+                    <br />
+                    
+                        <div id="code-verifying">Processing.</div>
+                        <div id="ccresult"> </div>
+                         <script type="text/javascript">
+                            jQuery("#checkCodeButton").click(
+                                    function () {
+                                        showprocess('code-verifying');
+                                        $.get("/member/check/@member.id",{'code': $("#ccField").val()}, function (data) {
+                                            $('#ccresult').html(data);
+                                        });
+                                        hideprocess('code-verifying');
+                                    }
+                            );
+                        </script>
                     
                 <h2>Having trouble?</h2>
                     <form class="failedsms">
@@ -292,7 +295,7 @@
                 </form><br /><br />
     
                 <div id="answer-verifying">Processing.</div>
-                <div id="answer-verified" style="visibility: hidden; color: green;" class="verified">Verified.</div>
+                <div id="answer-verified"  style="visibility: hidden; color: green;" class="verified">Verified.</div>
                 <div id="answer-incorrect" style="visibility: hidden; color: red;">Answer is incorrect.</div>
                 <script type="text/javascript">
                 

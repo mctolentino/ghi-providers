@@ -4,6 +4,7 @@ import static play.data.Form.form;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import models.ChallengeCode;
 import models.Member;
@@ -21,19 +22,23 @@ public class Members extends Controller {
         Member member = Member.find.byId(id);
         System.out.println("OK");
         ChallengeCode.saveChallengeCode(member);
-        return ok("Sending code to: "+member.person.phoneMobile);
+        return ok("Sending code to: " + member.person.phoneMobile);
     }
 
-    public static Result checkChallengeCode(Integer id, String code) {
-       // ChallengeCode cd = ChallengeCode.find.fetch("member").where().eq("member.id", id).findUnique();
-      //  System.out.println(cd);
-        if( "0000".equalsIgnoreCase(code)){
-            return ok(" Valid ");    
+    public static Result checkChallengeCode(Integer id) {
+        System.out.println("CHECK CHALLENGE CODE: " + id);
+        
+        Map<String,String[]> qp = request().queryString();
+        System.out.println(qp.get("code")[0]);
+        String code = qp.get("code")[0];
+        
+        if("0000".equalsIgnoreCase(code)){
+            return ok(" Valid ");
         }else{
-            return ok(" Not valid ");
+            return ok(" Not valid ");    
         }
     }
-    
+
     public static Result searchMember() {
         Form<SearchMember> searchMemberForm = form(SearchMember.class).bindFromRequest();
 
@@ -45,7 +50,8 @@ public class Members extends Controller {
                 memberList.add(result);
                 result.saveSearchAndVerificationDetails();
 
-                return ok(views.html.member.render(User.find.byId(request().username()), result, form(SearchMember.class), getRandomQuestion(result)));
+                return ok(views.html.member.render(User.find.byId(request().username()), result, form(SearchMember.class), getRandomQuestion(result),
+                        form(ValidateChallengeCode.class)));
             } else {
                 flash("error", "Member not found");
             }
@@ -65,7 +71,8 @@ public class Members extends Controller {
             m.saveNewSecurityQuestion();
         }
 
-        return ok(views.html.member.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
+        return ok(views.html.member.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m),
+                form(ValidateChallengeCode.class)));
     }
 
     private static SecurityQuestion getRandomQuestion(Member member) {
@@ -79,6 +86,19 @@ public class Members extends Controller {
         public String validate() {
             if (searchId == null) {
                 return "Search ID is null";
+            }
+            return null;
+        }
+
+    }
+
+    public static class ValidateChallengeCode {
+        public Integer challengeCode;
+        public Integer memberId;
+
+        public String validate() {
+            if (challengeCode == null) {
+                return "Please Enter Challenge Code";
             }
             return null;
         }
