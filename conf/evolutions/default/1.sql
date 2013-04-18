@@ -3,6 +3,12 @@
 
 # --- !Ups
 
+create table challenge_code (
+  id                        integer not null,
+  challenge_code            varchar(255),
+  constraint pk_challenge_code primary key (id))
+;
+
 create table member (
   id                        integer not null,
   CREUSER                   bigint,
@@ -103,6 +109,8 @@ create table verification_details (
   constraint pk_verification_details primary key (id))
 ;
 
+create sequence challenge_code_seq;
+
 create sequence member_seq;
 
 create sequence person_seq;
@@ -138,6 +146,8 @@ create index ix_verification_details_member_6 on verification_details (member_id
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists challenge_code;
+
 drop table if exists member;
 
 drop table if exists person;
@@ -155,6 +165,8 @@ drop table if exists user;
 drop table if exists verification_details;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists challenge_code_seq;
 
 drop sequence if exists member_seq;
 

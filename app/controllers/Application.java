@@ -1,7 +1,6 @@
 package controllers;
 
 import static play.data.Form.form;
-import models.Member;
 import models.SearchLog;
 import models.User;
 import play.data.Form;

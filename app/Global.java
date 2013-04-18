@@ -38,7 +38,7 @@ public class Global extends GlobalSettings {
         m.verificationDetails = new VerificationDetails(m, "F", new Date(2013-1900, 03, 15), "N", null);
         m.save();
         m = Member.find.byId(5);
-        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013-1900, 03, 15), "N", null);
+        m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
         m.save();
 
         Logger.info("Verification Details: Initialized.");

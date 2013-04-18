@@ -1,6 +1,6 @@
 @(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)
 
-@main(user, form) {
+@main(user, form, "GHI+ Client Portal - Member Information") {
 
 <div id="tabContaier">
     <ul class="tabs">
@@ -26,7 +26,7 @@
             <tr>
                 <td>Membership Status:</td>
                 @if( member.verificationDetails.verifiedFlag == "N"){
-                <td><img class="verified" src="@routes.Assets.at("images/not-verified.png")" title="Verified Member" alt="Verified Member"> <span class="not-verified.png">Not Verified</span></td>
+                <td><img class="verified" src="@routes.Assets.at("images/not-verified.png")" title="Verified Member" alt="Verified Member"> <span class="not-verified.png">Not Yet Verified</span></td>
                 }
                 @if( member.verificationDetails.verifiedFlag == "Y"){
                 <td><img class="verified" src="@routes.Assets.at("images/verified.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Verified</span></td>
@@ -178,7 +178,7 @@
         </div>
         
         
-<!--AUTHENTICATION STEPS CONTENT-->
+        <!--AUTHENTICATION STEPS CONTENT-->
         <div id="authentication" class="tabContents">
             <br /><br />
             <div class="verifysteps">
@@ -190,8 +190,7 @@
 
            <table id="authen">
             <tr>
-
-<!--FIRST STEP MOBILE AUTHENTICATION-->
+                <!--FIRST STEP MOBILE AUTHENTICATION-->
 
                 <!--SEND CODE VIA SMS-->
                 <td class="column1">
@@ -200,9 +199,24 @@
                     <p>Mobile Number: [+phone number]</p>
                     <p>Receiving time may vary depending on network status.</p>
 
-                    <div class="pull-center"><a href="#" class="sendcode" onclick="showprocess('code-processing')">SEND CODE</a></div><br />
+                    <div class="pull-center"><a href="@routes.Members.validateMember(member.id)" id="sendCodeButton" onclick="showprocess('code-processing');" class="sendcode">SEND CODE</a></div><br />
+
+                    <script type="text/javascript">
+                        jQuery("#sendCodeButton").click(
+                                function () {
+                                    $.get(jQuery(this).attr("href"), function (data) {
+                                        $('#sendcoderesult').html(data);
+                                    });
+                                    hideprocess('code-processing');
+                                    return false;
+                                }
+                        );
+                        
+                    </script>
+                    
                     
                     <div id="code-processing">Processing.</div>
+                    <div id="sendcoderesult" style="border: 1px solid black; padding: 5px;">not sent yet...</div>
                 </td>
 
                 <!--AUTHENTICATE CODE-->
@@ -211,18 +225,38 @@
                 <p>Enter below the verification code received by the member via SMS.</p>
                         
                     <form class="search_field" method="GET">
-                    <label>Verification Code:</label><br><input name="q" maxlength="6">
-                    <a href="#" class="verifycode" onclick="showprocess('code-verifying')">VERIFY</a>
+                    <label>Verification Code:</label><br /><input name="q" maxlength="6">
+                    <a href="/member/validate/@member.id/0000" id="checkCodeButton"  class="verifycode" onclick="showprocess('code-verifying');return false;">VERIFY</a>
                     </form><br />
-
                     <div id="code-verifying">Processing.</div>
-
+                    <div id="ccresult">Test: </div>
+                     <script type="text/javascript">
+                        jQuery("#checkCodeButton").click(
+                                function () {
+                                    $.get(jQuery(this).attr("href"), function (data) {
+                                        $('#ccresult').html(data);
+                                    });
+                                    hideprocess('code-processing');
+                                    return false;
+                                }
+                        );
+                        
+                    </script>
+                    
                 <h2>Having trouble?</h2>
                     <form class="failedsms">
-                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="nophone" onclick="showstuff('question-step');">Member does not have a mobile phone.</span><br>
-                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="changenumber" onclick="showstuff('question-step');">Member recently changed his/her number.</span><br>
-                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="wrongcode" onclick="showstuff('question-step');">Code entered is wrong.</span><br>
-                    <span class="failedsmslabel"><input type="radio" name="failedsms" value="nosms" onclick="showstuff('question-step');">Code was sent but member didn't receive SMS.</span>
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="nophone" onclick="showstuff('question-step');">
+                            Member does not have a mobile phone.
+                        </span><br />
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="changenumber" onclick="showstuff('question-step');">
+                            Member recently changed his/her number.
+                        </span><br />
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="wrongcode" onclick="showstuff('question-step');">
+                            Code entered is wrong.
+                        </span><br />
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="nosms" onclick="showstuff('question-step');">
+                            Code was sent but member didn't receive SMS.
+                        </span>
                     </form>
                 
                 </td>
@@ -230,60 +264,59 @@
             </table><br />
 
             
-<!--HIDDEN LINK TO SECURITY QUESTION-->
+            <!--HIDDEN LINK TO SECURITY QUESTION-->
             <div id="question-step">
-            <a href="#" onclick="showauthentication('securityquestion'); hideauthentication('authen'); hideprocess('answer-verifying'); 
-            hideprocess('code-processing'); hidesmsverifying('code-verifying');this.parentNode.style.display = 'none'">Proceed to Security Question &rarr;</a>
+                <a href="#" onclick="showauthentication('securityquestion'); hideauthentication('authen'); hideprocess('answer-verifying');hideprocess('code-processing'); hidesmsverifying('code-verifying');this.parentNode.style.display = 'none'">Proceed to Security Question &rarr;</a>
             </div>
 
-<!--HIDDEN LINK BACK TO DASHBOARD IF MEMBER IS VERIFIED-->
+            <!--HIDDEN LINK BACK TO DASHBOARD IF MEMBER IS VERIFIED-->
             <div id="back-dashboard">
-            <a href="dashboard.html">Go Back to Dashboard &rarr;</a>
+            <a href="@routes.Application.dashboard()">Go Back to Dashboard &rarr;</a>
             </div>
 
 
-<!--SECOND STEP SECURITY QUESTION AUTHENTICATION-->         
+            <!--SECOND STEP SECURITY QUESTION AUTHENTICATION-->         
         
-        <div id="securityquestion">
-            <hr class="hr">
-            <h2>Security Question for Member</h2>
-            <p>Ask member the following security question and enter his/her given answer. <br>
-            <span style="color: #b3b3b3;">The security question is randomly picked from a list of questions the member has selected during application. </span> <span style="color: #fe7223;">Please check the spelling before clicking Verify.</span>
-            </p><br/>
-        
-            <p><b>@question.question</b></p>
-        
-            <form class="securityanswer_field">
-            <label>Answer:</label><br><input name="answer" id="answerField" maxlength="30">
-            <a href="#" class="verifyanswer" onclick="validateAnswer(); return false;">VERIFY</a>
-            </form><br /><br />
-
-            <div id="answer-verifying">Processing.</div>
-            <div id="answer-verified" style="visibility: hidden; color: green;" class="verified">Verified.</div>
-            <div id="answer-incorrect" style="visibility: hidden; color: red;">Answer is incorrect.</div>
-            <script type="text/javascript">
+            <div id="securityquestion">
+                <hr class="hr">
+                <h2>Security Question for Member</h2>
+                <p>Ask member the following security question and enter his/her given answer. <br />
+                <span style="color: #b3b3b3;">The security question is randomly picked from a list of questions the member has selected during application. </span> <span style="color: #fe7223;">Please check the spelling before clicking Verify.</span>
+                </p><br/>
             
-            function validateAnswer(){
-                hideprocess('answer-verifying');
-                hideprocess('answer-verified');
-                hideprocess('answer-incorrect');
-                showprocess('answer-verifying');
-                answer = document.getElementById('answerField');
-                if( answer.value == '@question.answer' ){
-                    hideprocess('answer-verifying');
-                    showprocess('answer-verified');
-                    hideprocess('answer-incorrectg');
-                }else{
+                <p><b>@question.question</b></p>
+            
+                <form class="securityanswer_field">
+                <label>Answer: @question.answer</label><br /><input name="answer" id="answerField" maxlength="30">
+                <a href="#" class="verifyanswer" onclick="validateAnswer(); return false;">VERIFY</a>
+                </form><br /><br />
+    
+                <div id="answer-verifying">Processing.</div>
+                <div id="answer-verified" style="visibility: hidden; color: green;" class="verified">Verified.</div>
+                <div id="answer-incorrect" style="visibility: hidden; color: red;">Answer is incorrect.</div>
+                <script type="text/javascript">
+                
+                function validateAnswer(){
                     hideprocess('answer-verifying');
                     hideprocess('answer-verified');
-                    showprocess('answer-incorrect');
-                   
+                    hideprocess('answer-incorrect');
+                    showprocess('answer-verifying');
+                    answer = document.getElementById('answerField');
+                    if( answer.value == '@question.answer' ){
+                        hideprocess('answer-verifying');
+                        showprocess('answer-verified');
+                        showprocess('back-dashboard');
+                        hideprocess('answer-incorrectg');
+                    }else{
+                        hideprocess('answer-verifying');
+                        hideprocess('answer-verified');
+                        showprocess('answer-incorrect');
+                       
+                    }
+                    return false;
                 }
-                return false;
-            }
-            </script>
-        </div>
-            
+                </script>
+            </div>
         </div>
     </div><!-- //tab Details -->
 </div><!-- //Tab Container -->
@@ -302,11 +335,4 @@
         });
     });
 </script>
-}
-
-<br />
-<br />
-@for( question <- member.securityQuestions ){
-    @question.question @question.answer
-    <br />
 }

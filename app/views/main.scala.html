@@ -1,24 +1,25 @@
-@(user:User, form:Form[Members.SearchMember])(content: Html)
+@(user:User, form:Form[Members.SearchMember], title:String)(content: Html)
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-<title>GHI+ Client Portal - Dashboard</title>
+<title>@title</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/style.css")" />
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/dashstyle.css")" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 <script type="text/javascript" src="@routes.Assets.at("javascripts/script.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
 
 </head>
 
 <body>
+
     <!--START OF HEADER SECTION-->
     <div id="header">
         <div id="headercontent">
             <div id="logo">
-                <a href="dashboard.html" style="display: block; width: 185px; height: 75px;"></a>
+                <a href="@routes.Application.dashboard" style="display: block; width: 185px; height: 75px;"></a>
             </div>
 
             <div id="usernav">

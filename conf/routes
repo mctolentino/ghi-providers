@@ -4,7 +4,6 @@
 
 # Login Page
 GET     /                          controllers.Application.login()
-GET     /login                          controllers.Application.login()
 POST    /login                     controllers.Application.authenticate()
 
 
@@ -15,6 +14,9 @@ GET     /member/:member            controllers.Members.viewMember(member: Intege
 
 GET     /logout                    controllers.Application.logout()
 
+
+GET   /member/validate/:id          controllers.Members.validateMember(id:Integer)
+GET   /member/validate/:id/:code    controllers.Members.checkChallengeCode(id:Integer, code:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

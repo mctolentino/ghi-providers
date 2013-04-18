@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.ChallengeCode;
 import models.Member;
 import models.SecurityQuestion;
 import models.User;
@@ -16,6 +17,23 @@ import play.mvc.Security;
 @Security.Authenticated(Secured.class)
 public class Members extends Controller {
 
+    public static Result validateMember(Integer id) {
+        Member member = Member.find.byId(id);
+        System.out.println("OK");
+        ChallengeCode.saveChallengeCode(member);
+        return ok("Sending code to: "+member.person.phoneMobile);
+    }
+
+    public static Result checkChallengeCode(Integer id, String code) {
+       // ChallengeCode cd = ChallengeCode.find.fetch("member").where().eq("member.id", id).findUnique();
+      //  System.out.println(cd);
+        if( "0000".equalsIgnoreCase(code)){
+            return ok(" Valid ");    
+        }else{
+            return ok(" Not valid ");
+        }
+    }
+    
     public static Result searchMember() {
         Form<SearchMember> searchMemberForm = form(SearchMember.class).bindFromRequest();
 
