@@ -2,7 +2,7 @@
 /* CSS Document */
 
 html { height:100%;}
-body { background:url(images/bg.jpg); background-color: #006699; margin:0; font-family: 'Open Sans', sans-serif; height:100%; width:100%;}
+body { background:url(../images/bg.jpg); background-color: #006699; margin:0; font-family: 'Open Sans', sans-serif; height:100%; width:100%;}
 h1 { 
 	font-family: 'Open Sans', sans-serif; 
 	font-weight:100; 
@@ -48,14 +48,14 @@ a:active {color:#cccccc;}
 	}
 
 #logo { 
-	background:url(images/logo.png) no-repeat top left;
+	background:url(../images/logo.png) no-repeat top left;
 	width:185px;
 	height:75px; 
 	clear:both;
 	}
 
 .container { 
-	background-image: url(images/containerbg.png); 
+	background-image: url(../images/containerbg.png); 
 	background-repeat:no-repeat; 
 	background-position:left top; 
 	min-width:360px; max-width:100%; 
@@ -88,8 +88,16 @@ a:active {color:#cccccc;}
  
     /*** Background Gradient - 2 declarations one for Firefox and one for Webkit ***/
     background:  -moz-linear-gradient(19% 75% 90deg,#343d42, #414a4f);
-    background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#343d42), to(#414a4f)); 
+    background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#343d42), to(#343d42));
+
+
+	/*** for IE ***/
+	
+	background-color: #343d42;
+	
 	}
+	
+	
 
 
 input {
@@ -109,7 +117,7 @@ input {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
 	border-radius:6px;
-	
+		
 	/*** Background Gradient - 2 declarations one for Firefox and one for Webkit ***/
 
 	-webkit-transition: all 0.1s ease-out;
@@ -124,7 +132,7 @@ input {
 	
 	
 input[type='text']
-{ background: url(images/username.png);
+{ background: url(../images/username.png);
 	background-color: white; /* make the button transparent */
     background-repeat: no-repeat;  /* make the background image appear only once */
     background-position: 12px;  /* equivalent to 'top left' */
@@ -132,7 +140,7 @@ input[type='text']
     vertical-align: middle; /* align the text vertically centered */ }
 
 input[type='password']
-{ background: url(images/password.png);
+{ background: url(../images/password.png);
 	background-color: white; /* make the button transparent */
     background-repeat: no-repeat;  /* make the background image appear only once */
     background-position: 12px;  /* equivalent to 'top left' */
@@ -167,8 +175,18 @@ input.submit {
  
     /*** Adding CSS3 Gradients ***/
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f38631), to(#fb6902));   
-    background:  -moz-linear-gradient(19% 75% 90deg,#f38631, #fb6902);   
-	}
+    background:  -moz-linear-gradient(19% 75% 90deg,#f38631, #fb6902);  
+	
+	
+	/*** for IE ***/
+	
+	border-radius:6px;	
+	background-color: #f38631;
+	
+	
+	
+
+		}
 
 input.submit:hover {
 	-moz-border-radius: 6px;
@@ -201,6 +219,11 @@ input.submit:hover {
 	border-top-right-radius:6px;
 	border-top-left-radius:6px;
 	padding:20px; text-align:center;
+	
+	/*** for IE ***/
+	
+	background-color: #e0e0e0;
+	
 	}
 
 
@@ -214,22 +237,24 @@ input.submit:hover {
 	margin:8px 20px 20px 0;
 	}
 	
-.error_message { 
+.error-message { 
 	font-family:Arial, sans-serif; 
 	font-size:11px; 
 	color:#ff6666; 
 	text-align: center; 
 	margin:10px 20px 1px 20px;
+	
 	}
-
-.logout { 
+	
+.success-message { 
     font-family:Arial, sans-serif; 
     font-size:11px; 
-    color:#4AA02C; 
+    color:#009900; 
     text-align: center; 
     margin:10px 20px 1px 20px;
     
     }
+
 	
 .clear { clear:both; }
 

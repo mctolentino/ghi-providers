@@ -60,7 +60,15 @@ p.searchbox {
 	vertical-align: bottom;
 	}
 	
-	
+.error-message { 
+    font-family:Arial, sans-serif; 
+    font-size:11px; 
+    color:#ff6666; 
+    text-align: center; 
+    margin:10px 20px 1px 20px;
+    
+    }
+
 #headercontent { 
 	height: 75px; 
 	width: 1024px; 
@@ -123,7 +131,12 @@ p.searchbox {
     /*** Background Gradient - 2 declarations one for Firefox and one for Webkit ***/
     background:  -moz-linear-gradient(19% 75% 90deg,#343d42, #414a4f);
     background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#343d42), to(#414a4f)); 
+	
+	background-color: #343d42;
+	
 	}
+	
+	
 
 
 input {	
@@ -200,6 +213,9 @@ input.submit {
     /*** Adding CSS3 Gradients ***/
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f38631), to(#fb6902));   
     background:  -moz-linear-gradient(19% 75% 90deg,#f38631, #fb6902); 
+	
+	background-color: #f38631;
+	
 	}
 
 input.submit:hover {
@@ -221,6 +237,9 @@ input.submit:hover {
 	border-top-right-radius:6px;
 	border-top-left-radius:6px;
 	padding:20px; text-align:center;
+	
+	
+	
 	}
 
 
@@ -383,7 +402,6 @@ input.submit:hover {
 	margin: 0px;
 	}
 
-.not-verified-date { color: #999999; }
 .verified-date { color: #009900; }
 .yellow-flag-date { color: #cc9900; }
 .red-flag-date { color: #cc0000; }
@@ -466,8 +484,10 @@ input.submit:hover {
 	padding:10px 30px 30px 30px;
 	max-height: auto;
 	min-height: 545px;
-	margin:0;
 	display: block;
+	position: relative;
+    
+	
 	}
 	
 .tabContents h1{
@@ -719,7 +739,7 @@ td.column1 {
 
 td.column2 {
 	width: 50%;
-	background-color: #ffffff;
+	background-color: #e0e0e0;
 	color: #333333;
 	height: 300px;
 	padding: 0 15px 10px 15px;
@@ -727,6 +747,7 @@ td.column2 {
 	/*** Adding CSS3 Gradients ***/
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e0e0e0), to(#ffffff));   
     background:  -moz-linear-gradient(19% 75% 90deg,#ffffff, #e0e0e0);
+	
 	}
 
 
@@ -758,7 +779,7 @@ table#authen tr:last-child td:last-child {
 	box-shadow:inset 0px 0px 4px -2px #bbdaf7;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
 	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+	
 	background-color:#79bbff;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
@@ -772,12 +793,13 @@ table#authen tr:last-child td:last-child {
 	padding:9px 20px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #528ecc;
+	
 	}
 
 .sendcode:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
 	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+	
 	background-color:#378de5;
 	}
 
@@ -834,7 +856,7 @@ table#authen tr:last-child td:last-child {
 	box-shadow:inset 0px 1px 2px -3px #bbdaf7;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #378de5) );
 	background:-moz-linear-gradient( center top, #79bbff 5%, #378de5 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#378de5');
+	
 	background-color:#79bbff;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
@@ -848,12 +870,12 @@ table#authen tr:last-child td:last-child {
 	padding:7px 14px;
 	text-decoration:none;
 	text-shadow:2px 1px 2px #528ecc;
-	}
+		}
 
 .verifycode:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #378de5), color-stop(1, #79bbff) );
 	background:-moz-linear-gradient( center top, #378de5 5%, #79bbff 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#378de5', endColorstr='#79bbff');
+	
 	background-color:#378de5;
 	}
 
@@ -1064,12 +1086,24 @@ table#authen tr:last-child td:last-child {
 	border-top-right-radius:6px;
 	border-top-left-radius:6px;
 	padding:20px; text-align:center;
+	background-color: #e0e0e0;
 	}
 	
-.error_message { 
+	
+.error-message { 
     font-family:Arial, sans-serif; 
     font-size:11px; 
     color:#ff6666; 
     text-align: center; 
     margin:10px 20px 1px 20px;
+    
+    }
+    
+.success-message { 
+    font-family:Arial, sans-serif; 
+    font-size:11px; 
+    color:#009900; 
+    text-align: center; 
+    margin:10px 20px 1px 20px;
+    
     }

@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import play.db.ebean.Model;
+import util.DateUtil;
 
 @Entity
 public class Member extends WithHistory {
@@ -19,7 +19,7 @@ public class Member extends WithHistory {
     private static final long serialVersionUID = 1L;
     @Id
     public Integer id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     public Person person;
     public Long payeeId;
     public Long customerAccountId;
@@ -66,11 +66,11 @@ public class Member extends WithHistory {
 
         if (log == null) {
             this.log = new SearchLog();
-            this.log.searchDate = new Date();
+            this.log.searchDate = DateUtil.today();
             this.update();
         } else {
             this.log = log;
-            this.log.searchDate = new Date();
+            this.log.searchDate = DateUtil.today();
             this.update();
         }
 

@@ -71,7 +71,7 @@
 #code-processing {
 	width: 80px; height: 18px;
 	margin: 0 auto;
-    background-image: url('images/loading.gif');
+    background-image: url('../images/loading.gif');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -84,7 +84,7 @@
 #code-sent {
 	width: 40px; height: 12px;
 	margin: 0 auto;
-    background-image: url('images/verified.png');
+    background-image: url('../images/verified.png');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -97,7 +97,7 @@
 #code-notsent {
 	width: 137px; height: 15px;
 	margin: 0 auto;
-    background-image: url('images/warning.png');
+    background-image: url('../images/warning.png');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -110,7 +110,7 @@
 #member-verified {
 	width: 230px; height: 12px;
 	margin: 0 auto;
-    background-image: url('images/verified.png');
+    background-image: url('../images/verified.png');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -123,7 +123,7 @@
 #code-wrong {
 	width: 190px; height: 11px;
 	margin: 0 auto;
-    background-image: url('images/red-flag.png');
+    background-image: url('../images/red-flag.png');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -136,7 +136,7 @@
 #code-wrong-three {
 	width: 230px; height: 11px;
 	margin: 0 auto;
-    background-image: url('images/red-flag.png');
+    background-image: url('../images/red-flag.png');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -149,7 +149,7 @@
 #answer-wrong {
 	width: 450px; height: 11px;
 	margin: 0 auto;
-    background-image: url('images/red-flag.png');
+    background-image: url('../images/red-flag.png');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;
@@ -162,7 +162,7 @@
 #answer-wrong-three {
 	width: 440px; height: 11px;
 	margin: 0 auto;
-    background-image: url('images/red-flag.png');
+    background-image: url('../images/red-flag.png');
     background-repeat: no-repeat;
 	font-family: 'Open Sans', Arial;
 	font-size: 11px;

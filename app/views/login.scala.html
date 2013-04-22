@@ -8,6 +8,9 @@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/style.css")" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css' />
     <script type="text/javascript" src="@routes.Assets.at("javascripts/script.js")"></script>
+    <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/ie.css")" />
+    <![endif]-->
 </head>
 
 <body>
@@ -20,17 +23,19 @@
 <!--LOGIN FORM-->
      @helper.form(routes.Application.authenticate) {
          <div class="form">
-            <div class="clientlogo"><img src="@routes.Assets.at("images/acme-logo.png")" width="67" height="95"></div>
+            <div class="bcross">
+                <img src="@routes.Assets.at("images/bcross.png")" width="223" height="94">
+            </div>
            
             <div class="login" align="right">
                 <input type="text" name="username" placeholder="Username" value="@form("username").value" required>
                 <input type="password" name="password" placeholder="Password" required>
 
                     @if(form.hasGlobalErrors) {
-                        <div class="error_message">@form.globalError.message</div>
+                        <div class="error-message">@form.globalError.message</div>
                     }
                     @if(flash.contains("success")) {
-                        <div class="logout">@flash.get("success")</div>
+                        <div class="success-message">@flash.get("success")</div>
                     } 
                 <input type="submit" value="LOGIN »" name="submit" class="submit" align="right"/><br/>
                 <p class="forgot"><a href="#">Forgot Password?</a></p>
@@ -45,7 +50,23 @@
     
 </div>
     
-   
+    
+<div class="clear"></div>
+
+<div class="footer">
+    <div class="footer-about">
+    <p>
+    <a href="#">About</a> &nbsp; &nbsp; 
+    <a href="#">Help</a> &nbsp; &nbsp; 
+    <a href="#">Terms</a> &nbsp; &nbsp; 
+    <a href="#">Privacy</a> &nbsp; &nbsp; 
+    <a href="#">Contact Us</a></p>
+    </div>
+    
+    <div class="footer-copy">
+     <p>© 2013 <a href="http://www.portland-software.com" target="_blank">Portland Software</a> &nbsp; &nbsp; ∙ &nbsp; &nbsp; Powered by <a href="http://www.volenday.com" target="_blank">Volenday</a></p>
+    </div>
+</div>   
 
 </body>
 </html>

@@ -5,12 +5,15 @@
 <head>
 
 <title>@title</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/dashstyle.css")" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="@routes.Assets.at("javascripts/script.js")"></script>
-<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/items.css")"/>
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/dashstyle.css")" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/script.js")"></script>
+    <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
+    <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/ie.css")" />
+    <![endif]-->
 </head>
 
 <body>
@@ -47,7 +50,7 @@
     <!--START OF SEARCH FORM AT LEFT SIDEBAR-->
         @helper.form(routes.Members.searchMember) {
             <div class="form">
-                    <div class="clientlogo"><img src="@routes.Assets.at("images/acme-small.png")" width="54" height="76"></div>
+                    <div class="bcross"><img src="@routes.Assets.at("images/bcross-small.png")" width="180" height="76"></div>
                     
                     <p class="searchbox">&nbsp;<br>Please enter the Membership Code<br />to view full details.</p>
                     
@@ -56,7 +59,7 @@
                         <input type="text" name="searchId"  placeholder="Enter Membership Code" class="searchcode" onchange="hideIcon(this);" value="@form("searchId").value"/>
                         
                         @if(flash.contains("error")) {
-                           <div class="error_message">@flash.get("error")</div>
+                           <div class="error-message">@flash.get("error")</div>
                         }
                         
                         <input type="submit" class="submit" value="Find »" />

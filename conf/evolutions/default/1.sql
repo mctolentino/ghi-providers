@@ -5,6 +5,7 @@
 
 create table challenge_code (
   id                        integer not null,
+  member_id                 integer,
   challenge_code            varchar(255),
   constraint pk_challenge_code primary key (id))
 ;
@@ -127,18 +128,20 @@ create sequence user_seq;
 
 create sequence verification_details_seq;
 
-alter table member add constraint fk_member_person_1 foreign key (person_id) references person (id) on delete restrict on update restrict;
-create index ix_member_person_1 on member (person_id);
-alter table member add constraint fk_member_verificationDetails_2 foreign key (verification_details_id) references verification_details (id) on delete restrict on update restrict;
-create index ix_member_verificationDetails_2 on member (verification_details_id);
-alter table member add constraint fk_member_log_3 foreign key (log_id) references search_log (id) on delete restrict on update restrict;
-create index ix_member_log_3 on member (log_id);
-alter table search_log add constraint fk_search_log_member_4 foreign key (member_id) references member (id) on delete restrict on update restrict;
-create index ix_search_log_member_4 on search_log (member_id);
-alter table security_question add constraint fk_security_question_member_5 foreign key (member_id) references member (id) on delete restrict on update restrict;
-create index ix_security_question_member_5 on security_question (member_id);
-alter table verification_details add constraint fk_verification_details_member_6 foreign key (member_id) references member (id) on delete restrict on update restrict;
-create index ix_verification_details_member_6 on verification_details (member_id);
+alter table challenge_code add constraint fk_challenge_code_member_1 foreign key (member_id) references member (id) on delete restrict on update restrict;
+create index ix_challenge_code_member_1 on challenge_code (member_id);
+alter table member add constraint fk_member_person_2 foreign key (person_id) references person (id) on delete restrict on update restrict;
+create index ix_member_person_2 on member (person_id);
+alter table member add constraint fk_member_verificationDetails_3 foreign key (verification_details_id) references verification_details (id) on delete restrict on update restrict;
+create index ix_member_verificationDetails_3 on member (verification_details_id);
+alter table member add constraint fk_member_log_4 foreign key (log_id) references search_log (id) on delete restrict on update restrict;
+create index ix_member_log_4 on member (log_id);
+alter table search_log add constraint fk_search_log_member_5 foreign key (member_id) references member (id) on delete restrict on update restrict;
+create index ix_search_log_member_5 on search_log (member_id);
+alter table security_question add constraint fk_security_question_member_6 foreign key (member_id) references member (id) on delete restrict on update restrict;
+create index ix_security_question_member_6 on security_question (member_id);
+alter table verification_details add constraint fk_verification_details_member_7 foreign key (member_id) references member (id) on delete restrict on update restrict;
+create index ix_verification_details_member_7 on verification_details (member_id);
 
 
 

@@ -5,8 +5,8 @@ import com.github.play2war.plugin._
 
 object ApplicationBuild extends Build {
 
-  val appName         = "ghiProviders"
-  val appVersion      = "1.0-SNAPSHOT"
+  val appName         = "GHI2FA"
+  val appVersion      = "1.0"
 
   val appDependencies = Seq(
     // Add your project dependencies here,
@@ -15,7 +15,7 @@ object ApplicationBuild extends Build {
     javaEbean
   )
 
-  val main = play.Project(appName, appVersion, appDependencies).settings(
+  val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
     // Add your own project settings here      
     Play2WarKeys.servletVersion := "2.5"
   ).settings(Play2WarPlugin.play2WarSettings: _*)

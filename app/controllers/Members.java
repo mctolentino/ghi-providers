@@ -11,34 +11,73 @@ import models.Member;
 import models.SecurityQuestion;
 import models.User;
 import play.data.Form;
+import play.libs.WS;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import util.ChallengeCodeUtil;
+import util.DateUtil;
 
 @Security.Authenticated(Secured.class)
 public class Members extends Controller {
 
+    private final static String BASE_URL = "http://192.168.1.152:8080/sms-gw/ws";
+    private final static String SUCCESS = "SUCCESS";
+
     public static Result validateMember(Integer id) {
         Member member = Member.find.byId(id);
-        System.out.println("OK");
-        ChallengeCode.saveChallengeCode(member);
-        return ok("Sending code to: " + member.person.phoneMobile);
-    }
+        String challengeCode = ChallengeCodeUtil.generateChallenge();
 
-    public static Result checkChallengeCode(Integer id) {
-        System.out.println("CHECK CHALLENGE CODE: " + id);
-        
-        Map<String,String[]> qp = request().queryString();
-        System.out.println(qp.get("code")[0]);
-        String code = qp.get("code")[0];
-        
-        if("0000".equalsIgnoreCase(code)){
-            return ok(" Valid ");
-        }else{
-            return ok(" Not valid ");    
+        String URL = BASE_URL + "/" + member.person.phoneMobile + "/" + challengeCode;
+        System.out.println("URL: " + URL);
+
+        if ((WS.url(URL)
+               .get().get()).getBody()
+                            .equals(SUCCESS)) {
+            ChallengeCode.saveChallengeCode(member, challengeCode);
+            return ok("<div id=\"code-sent\">Sent.</div>");
+        } else {
+            return ok("<div id=\"code-notsent\">Sending failed. Try again.</div>");
         }
     }
 
+    public static Result setWatchListFlag(Integer id) {
+        Member member = Member.find.byId(id);
+
+        if (member != null) {
+            member.verificationDetails.verifiedFlag = "Y";
+            member.verificationDetails.verifiedDate = DateUtil.today();
+            member.verificationDetails.watchlistFlag = "Y";
+            member.verificationDetails.watchlistDate = DateUtil.threeMonthsFromToday();
+            member.update();
+        }
+
+        return ok("SUCCESS");
+    }
+
+    public static Result checkChallengeCode(Integer id) {
+        Map<String, String[]> qp = request().queryString();
+        String code = qp.get("code")[0];
+
+        if (ChallengeCode.validateChallengeCode(id, code)) {
+            Member member = Member.find.byId(id);
+            member.verificationDetails.verifiedDate = DateUtil.today();
+            member.verificationDetails.verifiedFlag = "Y";
+            member.verificationDetails.watchlistFlag = "N";
+            member.verificationDetails.watchlistDate = null;
+            member.update();
+            return ok(" <div id=\"member-verified\">Member verified and authorized to use card.</div> ");
+        } else {
+            Member member = Member.find.byId(id);
+            member.verificationDetails.verifiedDate = DateUtil.threeMonthsFromToday();
+            member.verificationDetails.verifiedFlag = "F";
+            member.verificationDetails.watchlistFlag = "N";
+            member.verificationDetails.watchlistDate = null;
+            member.update();
+            return ok(" <div id=\"code-wrong-three\">Wrong code. Please choose an option below.</div> ");
+        }
+    }
+    
     public static Result searchMember() {
         Form<SearchMember> searchMemberForm = form(SearchMember.class).bindFromRequest();
 

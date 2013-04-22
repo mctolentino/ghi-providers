@@ -24,12 +24,15 @@
             
             <table>
             <tr>
-                <td>Membership Status:</td>
+                <td>Membership Status:</td> 
                 @if( member.verificationDetails.verifiedFlag == "N"){
-                <td><img class="verified" src="@routes.Assets.at("images/not-verified.png")" title="Verified Member" alt="Verified Member"> <span class="not-verified.png">Not Yet Verified</span></td>
+                    <td><img class="verified" src="@routes.Assets.at("images/not-verified.png")" title="Verified Member" alt="Verified Member"> <span class="not-verified.png">Not Yet Verified</span></td>
                 }
                 @if( member.verificationDetails.verifiedFlag == "Y"){
-                <td><img class="verified" src="@routes.Assets.at("images/verified.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Verified</span></td>
+                    <td><img class="verified" src="@routes.Assets.at("images/verified.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Verified</span></td>
+                }
+                @if( member.verificationDetails.verifiedFlag == "F"){
+                    <td><img class="verified" src="@routes.Assets.at("images/red-flag.png")" title="Flagged Member" alt="Flagged Member"> <span class="red-flag-date">Flagged</span></td>
                 }
             </tr>
             
@@ -199,15 +202,16 @@
                     <p>Mobile Number: [@member.person.phoneMobile]</p>
                     <p>Receiving time may vary depending on network status.</p>
 
-                    <div class="pull-center"><a href="@routes.Members.validateMember(member.id)" id="sendCodeButton" onclick="showprocess('code-processing');" class="sendcode">SEND CODE</a></div><br />
+                    <div class="pull-center"><a href="@routes.Members.validateMember(member.id)" id="sendCodeButton" onclick="showprocess('code-processing'); return false;" class="sendcode">SEND CODE</a></div><br />
 
                     <script type="text/javascript">
                         jQuery("#sendCodeButton").click(
                                 function () {
                                     $.get(jQuery(this).attr("href"), function (data) {
                                         $('#sendcoderesult').html(data);
+                                        hideprocess('code-processing');
                                     });
-                                    hideprocess('code-processing');
+                                    
                                     return false;
                                 }
                         );
@@ -227,21 +231,22 @@
                         <label>Verification Code:</label>
                         <br />
                             <input type="text" name="challengeCode" id="ccField" maxlength="6" />
-                            <a id="checkCodeButton"  class="verifycode" onclick="return false;">VERIFY</a>
+                            <a id="checkCodeButton"  class="verifycode" onclick="showprocess('code-verifying');return false;">VERIFY</a>
                     </form>
                     
                     <br />
                     
                         <div id="code-verifying">Processing.</div>
-                        <div id="ccresult"> </div>
+                        <span id="ccresult"> </span>
                          <script type="text/javascript">
-                            jQuery("#checkCodeButton").click(
+                            $("#checkCodeButton").click(
                                     function () {
-                                        showprocess('code-verifying');
                                         $.get("/member/check/@member.id",{'code': $("#ccField").val()}, function (data) {
-                                            $('#ccresult').html(data);
+                                            $("#ccresult").html(data);
+                                            hideprocess('code-verifying');
+                                            showprocess('back-dashboard');
                                         });
-                                        hideprocess('code-verifying');
+                                        
                                     }
                             );
                         </script>
@@ -290,7 +295,7 @@
                 <p><b>@question.question</b></p>
             
                 <form class="securityanswer_field">
-                <label>Answer: @question.answer</label><br /><input name="answer" id="answerField" maxlength="30">
+                <label>[FOR TESTING] @question.answer</label><br /><input name="answer" id="answerField" maxlength="30">
                 <a href="#" class="verifyanswer" onclick="validateAnswer(); return false;">VERIFY</a>
                 </form><br /><br />
     
@@ -305,16 +310,17 @@
                     hideprocess('answer-incorrect');
                     showprocess('answer-verifying');
                     answer = document.getElementById('answerField');
-                    if( answer.value == '@question.answer' ){
-                        hideprocess('answer-verifying');
-                        showprocess('answer-verified');
-                        showprocess('back-dashboard');
-                        hideprocess('answer-incorrectg');
+                    if( answer.value.toUpperCase() == '@question.answer'.toUpperCase() ){
+                        $.get("/member/to/watchlist/@member.id", function (data) {
+                            hideprocess('answer-verifying');
+                            showprocess('answer-verified');
+                            showprocess('back-dashboard');
+                            hideprocess('answer-incorrect');
+                        });
                     }else{
                         hideprocess('answer-verifying');
                         hideprocess('answer-verified');
                         showprocess('answer-incorrect');
-                       
                     }
                     return false;
                 }

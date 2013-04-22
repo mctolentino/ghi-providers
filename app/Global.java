@@ -1,3 +1,5 @@
+import static play.data.Form.form;
+
 import java.util.Date;
 import java.util.List;
 
@@ -8,8 +10,14 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.libs.Yaml;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Http.RequestHeader;
+import views.html.login;
 
 import com.avaje.ebean.Ebean;
+
+import controllers.Application.Login;
 
 public class Global extends GlobalSettings {
     @Override
@@ -19,42 +27,33 @@ public class Global extends GlobalSettings {
             Ebean.save((List<?>) Yaml.load("initial-data.yml"));
         }
         initializeVerificationDetails();
-        initializeSecurityQuestions();
     }
 
     @SuppressWarnings("deprecation")
     private static void initializeVerificationDetails() {
 
         Member m = Member.find.byId(1);
-        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013-1900, 03, 15), "N", null);
-        m.save();
+        m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
+        m.update();
         m = Member.find.byId(2);
-        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013-1900, 03, 15), "Y", new Date(2013, 12, 17));
-        m.save();
+        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013 - 1900, 03, 15), "Y", new Date(2013 - 1900, 12, 17));
+        m.update();
         m = Member.find.byId(3);
         m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
-        m.save();
+        m.update();
         m = Member.find.byId(4);
-        m.verificationDetails = new VerificationDetails(m, "F", new Date(2013-1900, 03, 15), "N", null);
-        m.save();
+        m.verificationDetails = new VerificationDetails(m, "F", new Date(2013 - 1900, 03, 15), "N", null);
+        m.update();
         m = Member.find.byId(5);
         m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
-        m.save();
+        m.update();
 
         Logger.info("Verification Details: Initialized.");
     }
 
-    private static void initializeSecurityQuestions() {
-
-        // List<Member> members = Member.find.all();
-
-        // for (Member member : members) {
-        // if (member.securityQuestions == null ||
-        // member.securityQuestions.size() == 0) {
-        // member.saveNewSecurityQuestion();
-        // }
-        // }
-
-        Logger.info("Security Questions: Initialized.");
+    @Override
+    public Result onHandlerNotFound(RequestHeader request) {
+        return Controller.ok(login.render(form(Login.class)));
     }
+
 }
