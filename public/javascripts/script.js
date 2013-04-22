@@ -33,3 +33,11 @@ function hideauthentication(boxid){
    document.getElementById(boxid).style.visibility="hidden";
 }
 
+function showItem(boxid){
+    document.getElementById(boxid).style.display="block";
+}
+
+function hideItem(boxid){
+    document.getElementById(boxid).style.display="none";
+}
+

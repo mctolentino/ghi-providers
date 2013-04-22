@@ -1,0 +1,164 @@
+@(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)
+
+
+@tabs = {
+        <li class="tabs"><a href="/member/@member.id/personalinfo")">Personal Information</a></li>
+        <li class="tabs"><a href="/member/@member.id/contact">Contact Details</a></li>
+        <li class="tabs"><a href="/member/@member.id/group">Group Information</a></li>
+        <li class="tabs"><a href="/member/@member.id/claims">Claims</a></li>
+        <li class="tabs"><a class="active" href="/member/@member.id/authentication">Authentication</a></li>
+}
+
+@template(user, member, form, question)(tabs){        
+        
+        <!--AUTHENTICATION STEPS CONTENT-->
+        <div id="authentication" class="tabContents">
+            <br /><br />
+            <div class="verifysteps"  id="mobileAuth" >
+                    <img src="@routes.Assets.at("images/mobile-active.png")" class="pull-left" width="155" height="90">
+                    <img src="@routes.Assets.at("images/question-inactive.png")" class="pull-right" width="124" height="93">
+                    <img src="@routes.Assets.at("images/right-arrow.png")" class="verifysteps-rightarrow">
+            </div>
+            <div class="verifysteps" id="secqAuth" style="display: none">
+                    <img src="@routes.Assets.at("images/mobile-inactive.png")" class="pull-left" width="155" height="90">
+                    <img  src="@routes.Assets.at("images/question-active.png")" class="pull-right" width="124" height="93">
+                    <img src="@routes.Assets.at("images/right-arrow.png")" class="verifysteps-rightarrow">
+            </div>
+            
+            <br />
+
+           <table id="authen">
+            <tr>
+                <!--FIRST STEP MOBILE AUTHENTICATION-->
+
+                <!--SEND CODE VIA SMS-->
+                <td class="column1">
+                    <h2 style="color:#ffffff;">SEND CODE TO MEMBER</h2>
+                    <p>Send a verification code to the member's mobile phone to validate that his/her information is correct. </p>
+                    <p>Mobile Number: [@member.person.phoneMobile]</p>
+                    <p>Receiving time may vary depending on network status.</p>
+
+                    <div class="pull-center"><a href="@routes.Members.validateMember(member.id)" id="sendCodeButton" onclick="showprocess('code-processing'); return false;" class="sendcode">SEND CODE</a></div><br />
+
+                    <script type="text/javascript">
+                        jQuery("#sendCodeButton").click(
+                                function () {
+                                    $.get(jQuery(this).attr("href"), function (data) {
+                                        $('#sendcoderesult').html(data);
+                                        hideprocess('code-processing');
+                                    });
+                                    
+                                    return false;
+                                }
+                        );
+                    </script>
+                    
+                    <div id="code-processing">Processing.</div>
+                    <div id="sendcoderesult" style="padding: 5px;"> </div>
+                </td>
+
+                <!--AUTHENTICATE CODE-->
+                <td class="column2">
+                <h2>ENTER CODE TO VERIFY</h2>
+                <p>Enter below the verification code received by the member via SMS.</p>
+                    
+                    <form class="search_field" id="cform">
+                        <label>Verification Code:</label>
+                        <br />
+                            <input type="text" name="challengeCode" id="ccField" maxlength="6" />
+                            <a id="checkCodeButton"  class="verifycode" onclick="showprocess('code-verifying');return false;">VERIFY</a>
+                    </form>
+                    
+                    <br />
+                        <div id="code-verifying">Processing.</div>
+                        <span id="ccresult"> </span>
+                         <script type="text/javascript">
+                            $("#checkCodeButton").click(
+                                    function () {
+                                        $.get("/member/check/@member.id",{'code': $("#ccField").val()}, function (data) {
+                                            $("#ccresult").html(data);
+                                            hideprocess('code-verifying');
+                                            showprocess('back-dashboard');
+                                        });
+                                        
+                                    }
+                            );
+                        </script>
+                    
+                <h2>Having trouble?</h2>
+                    <form class="failedsms">
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="nophone" onclick="showstuff('question-step');">
+                            Member does not have a mobile phone.
+                        </span><br />
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="changenumber" onclick="showstuff('question-step');">
+                            Member recently changed his/her number.
+                        </span><br />
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="wrongcode" onclick="showstuff('question-step');">
+                            Code entered is wrong.
+                        </span><br />
+                        <span class="failedsmslabel"><input type="radio" name="failedsms" value="nosms" onclick="showstuff('question-step');">
+                            Code was sent but member didn't receive SMS.
+                        </span>
+                    </form>
+                
+                </td>
+            </tr>
+            </table><br />
+
+            
+            <!--HIDDEN LINK TO SECURITY QUESTION-->
+            <div id="question-step">
+                <a href="#" onclick="showItem('secqAuth');hideItem('mobileAuth');showauthentication('securityquestion'); hideauthentication('authen'); hideprocess('answer-verifying');hideprocess('code-processing'); hidesmsverifying('code-verifying');this.parentNode.style.display = 'none'">Proceed to Security Question &rarr;</a>
+            </div>
+
+            <!--HIDDEN LINK BACK TO DASHBOARD IF MEMBER IS VERIFIED-->
+            <div id="back-dashboard">
+            <a href="@routes.Application.dashboard()">Go Back to Dashboard &rarr;</a>
+            </div>
+
+
+            <!--SECOND STEP SECURITY QUESTION AUTHENTICATION-->         
+        
+            <div id="securityquestion">
+                <hr class="hr">
+                <h2>Security Question for Member</h2>
+                <p>Ask member the following security question and enter his/her given answer. <br />
+                <span style="color: #b3b3b3;">The security question is randomly picked from a list of questions the member has selected during application. </span> <span style="color: #fe7223;">Please check the spelling before clicking Verify.</span>
+                </p><br/>
+            
+                <p><b>@question.question</b></p>
+            
+                <form class="securityanswer_field">
+                <label>[FOR TESTING] @question.answer</label><br /><input name="answer" id="answerField" maxlength="30">
+                <a href="#" class="verifyanswer" onclick="validateAnswer(); return false;">VERIFY</a>
+                </form><br /><br />
+    
+                <div id="answer-verifying">Processing.</div>
+                <div id="answer-verified"  style="visibility: hidden; color: green;" class="verified">Verified.</div>
+                <div id="answer-incorrect" style="visibility: hidden; color: red;">Answer is incorrect.</div>
+                <script type="text/javascript">
+                
+                function validateAnswer(){
+                    hideprocess('answer-verifying');
+                    hideprocess('answer-verified');
+                    hideprocess('answer-incorrect');
+                    showprocess('answer-verifying');
+                    answer = document.getElementById('answerField');
+                    if( answer.value.toUpperCase() == '@question.answer'.toUpperCase() ){
+                        $.get("/member/to/watchlist/@member.id", function (data) {
+                            hideprocess('answer-verifying');
+                            showprocess('answer-verified');
+                            showprocess('back-dashboard');
+                            hideprocess('answer-incorrect');
+                        });
+                    }else{
+                        hideprocess('answer-verifying');
+                        hideprocess('answer-verified');
+                        showprocess('answer-incorrect');
+                    }
+                    return false;
+                }
+                </script>
+            </div>
+        </div>
+}

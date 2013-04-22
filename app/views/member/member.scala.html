@@ -1,0 +1,100 @@
+@(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)
+
+@tabs = {
+        <li class="tabs"><a class="active" href="/member/@member.id/personalinfo")">Personal Information</a></li>
+        <li class="tabs"><a href="/member/@member.id/contact">Contact Details</a></li>
+        <li class="tabs"><a href="/member/@member.id/group">Group Information</a></li>
+        <li class="tabs"><a href="/member/@member.id/claims">Claims</a></li>
+        <li class="tabs"><a href="/member/@member.id/authentication">Authentication</a></li>
+}
+
+@template(user, member, form, question)(tabs){
+
+<!--PERSONAL INFORMATION CONTENT-->
+        <div id="personalinfo" class="tabContents">
+            <img src="/assets/member/profiles/@{member.id}.jpg" width="100" height="100" align="left" style="margin:30px 10px 0 0; border: 1px solid #cccccc; padding:4px;">
+            <h1>@member.person.firstName @member.person.surname </h1>
+            <p>Profile last updated: @member.person.updateDate.format("MMM-dd-yyyy") </p>
+            <br />
+            
+            <table>
+            <tr>
+                <td>Membership Status:</td> 
+                @if( member.verificationDetails.verifiedFlag == "N"){
+                    <td><img class="verified" src="@routes.Assets.at("images/not-verified.png")" title="Verified Member" alt="Verified Member"> <span class="not-verified.png">Not Yet Verified</span></td>
+                }
+                @if( member.verificationDetails.verifiedFlag == "Y"){
+                    <td><img class="verified" src="@routes.Assets.at("images/verified.png")" title="Verified Member" alt="Verified Member"> <span class="verified-date">Verified</span></td>
+                }
+                @if( member.verificationDetails.verifiedFlag == "F"){
+                    <td><img class="verified" src="@routes.Assets.at("images/red-flag.png")" title="Flagged Member" alt="Flagged Member"> <span class="red-flag-date">Flagged</span></td>
+                }
+            </tr>
+            
+            <tr>
+                <td>Membership Code:</td>
+                <td>@member.id</td>
+            </tr>
+                        
+            <tr>
+                <td>National ID:</td>
+                <td>00000@member.id </td>
+            </tr>
+            
+            <tr>
+                <td>Date of Birth:</td>
+                <td>@member.person.dob.format("MMM-dd-yyyy")</td>
+            </tr>
+            
+            <tr>
+                <td>Start Date:</td>
+                <td> Jan - 1 - 2013 </td>
+            </tr>
+            
+            <tr>
+                <td>End Date:</td>
+                <td> - </td>
+            </tr>
+            
+            <tr>
+                <td>Policy Type:</td>
+                <td>Basic</td>
+            </tr>
+            
+            <tr>
+                <td>Primary Insured:</td>
+                <td>$ 100,000</td>
+            </tr>
+            
+            <tr>
+                <td>Sum Insured:</td>
+                <td>$ 100,000</td>
+            </tr>
+            
+            <tr>
+                <td>VIP:</td>
+                <td> Yes </td>
+            </tr>
+            
+            <tr>
+                <td>Last Search:</td>
+                <td> @member.log.searchDate.format("MMM-dd-yyyy") </td>
+            </tr>
+            
+            <tr>
+                <td>Underwriter:</td>
+                <td> GHI </td>
+            </tr>
+            
+            <tr>
+                <td>Next Renewal Date:</td>
+                <td> Dec-31-2013 </td>
+            </tr>
+            
+            <tr>
+                <td>Last Renewal Date:</td>
+                <td> Dec-31-2015 </td>
+            </tr>
+            </table>
+        </div>
+}

@@ -3,6 +3,7 @@ package controllers;
 import static play.data.Form.form;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import models.ChallengeCode;
 import models.Member;
 import models.SecurityQuestion;
 import models.User;
+import play.Play;
 import play.data.Form;
 import play.libs.WS;
 import play.mvc.Controller;
@@ -17,11 +19,14 @@ import play.mvc.Result;
 import play.mvc.Security;
 import util.ChallengeCodeUtil;
 import util.DateUtil;
+import controllers.Members.SearchMember;
 
 @Security.Authenticated(Secured.class)
 public class Members extends Controller {
 
-    private final static String BASE_URL = "http://192.168.1.152:8080/sms-gw/ws";
+    private final static String BASE_URL = Play.application()
+                                               .configuration()
+                                               .getString("sms.gateway.base_url");
     private final static String SUCCESS = "SUCCESS";
 
     public static Result validateMember(Integer id) {
@@ -77,7 +82,7 @@ public class Members extends Controller {
             return ok(" <div id=\"code-wrong-three\">Wrong code. Please choose an option below.</div> ");
         }
     }
-    
+
     public static Result searchMember() {
         Form<SearchMember> searchMemberForm = form(SearchMember.class).bindFromRequest();
 
@@ -89,8 +94,8 @@ public class Members extends Controller {
                 memberList.add(result);
                 result.saveSearchAndVerificationDetails();
 
-                return ok(views.html.member.render(User.find.byId(request().username()), result, form(SearchMember.class), getRandomQuestion(result),
-                        form(ValidateChallengeCode.class)));
+                return ok(views.html.member.member.render(User.find.byId(request().username()), result, form(SearchMember.class),
+                        getRandomQuestion(result)));
             } else {
                 flash("error", "Member not found");
             }
@@ -102,16 +107,25 @@ public class Members extends Controller {
 
     public static Result viewMember(Integer member) {
         Member m = Member.find.byId(member);
+        return ok(views.html.member.member.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
+    }
 
-        if (m.verificationDetails == null) {
-            m.saveNewVerificationDetails();
-        }
-        if (m.securityQuestions == null || m.securityQuestions.size() == 0) {
-            m.saveNewSecurityQuestion();
+    public static Result viewMember(Integer member, String pageString) {
+        Member m = Member.find.byId(member);
+
+        if (pageString.equalsIgnoreCase("personalinfo")) {
+            return ok(views.html.member.member.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
+        } else if (pageString.equalsIgnoreCase("contact")) {
+            return ok(views.html.member.contact.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
+        } else if (pageString.equalsIgnoreCase("group")) {
+            return ok(views.html.member.group.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
+        } else if (pageString.equalsIgnoreCase("claims")) {
+            return ok(views.html.member.claims.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
+        } else if (pageString.equalsIgnoreCase("authentication")) {
+            return ok(views.html.member.authentication.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
         }
 
-        return ok(views.html.member.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m),
-                form(ValidateChallengeCode.class)));
+        return ok(views.html.member.member.render(User.find.byId(request().username()), m, form(SearchMember.class), getRandomQuestion(m)));
     }
 
     private static SecurityQuestion getRandomQuestion(Member member) {
@@ -131,17 +145,12 @@ public class Members extends Controller {
 
     }
 
-    public static class ValidateChallengeCode {
-        public Integer challengeCode;
-        public Integer memberId;
-
-        public String validate() {
-            if (challengeCode == null) {
-                return "Please Enter Challenge Code";
-            }
-            return null;
-        }
-
+    private Member setMemberVerificationDetails(Member member, String verifiedFlag, Date verifiedDate, String watchlistFlag, Date watchlistDate) {
+        member.verificationDetails.verifiedFlag = verifiedFlag;
+        member.verificationDetails.verifiedDate = verifiedDate;
+        member.verificationDetails.watchlistFlag = watchlistFlag;
+        member.verificationDetails.watchlistDate = watchlistDate;
+        return member;
     }
 
 }

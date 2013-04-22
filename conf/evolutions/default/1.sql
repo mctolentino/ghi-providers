@@ -93,11 +93,11 @@ create table security_question (
   constraint pk_security_question primary key (id))
 ;
 
-create table user (
+create table ghi_user (
   username                  varchar(255) not null,
   email                     varchar(255),
   password                  varchar(255),
-  constraint pk_user primary key (username))
+  constraint pk_ghi_user primary key (username))
 ;
 
 create table verification_details (
@@ -124,7 +124,7 @@ create sequence search_log_seq;
 
 create sequence security_question_seq;
 
-create sequence user_seq;
+create sequence ghi_user_seq;
 
 create sequence verification_details_seq;
 
@@ -163,7 +163,7 @@ drop table if exists search_log;
 
 drop table if exists security_question;
 
-drop table if exists user;
+drop table if exists ghi_user;
 
 drop table if exists verification_details;
 
@@ -183,7 +183,7 @@ drop sequence if exists search_log_seq;
 
 drop sequence if exists security_question_seq;
 
-drop sequence if exists user_seq;
+drop sequence if exists ghi_user_seq;
 
 drop sequence if exists verification_details_seq;
 

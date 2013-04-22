@@ -37,7 +37,7 @@ public class Person extends WithHistory {
 	public String nhi;
 	public String activeFlag;
 	public String nationalId;
-
+	
 	public Person() {
 
 	}

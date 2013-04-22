@@ -1,0 +1,28 @@
+@(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)
+
+@tabs = {
+        <li class="tabs"><a href="/member/@member.id/personalinfo")">Personal Information</a></li>
+        <li class="tabs"><a href="/member/@member.id/contact">Contact Details</a></li>
+        <li class="tabs"><a href="/member/@member.id/group">Group Information</a></li>
+        <li class="tabs"><a class="active" href="/member/@member.id/claims">Claims</a></li>
+        <li class="tabs"><a href="/member/@member.id/authentication">Authentication</a></li>
+}
+
+@template(user, member, form, question)(tabs){
+<!--CLAIMS INFORMATION CONTENT-->
+        <div id="claims" class="tabContents">
+                    
+            <table>
+            <tr>
+                <td>Date Last Prior Approval Submitted:</td>
+                <td>Status</td>
+            </tr>
+            
+            <tr>
+                <td>Date Last Claim Submitted:</td>
+                <td>Status</td>
+            </tr>
+            </table>
+        </div>
+        
+}

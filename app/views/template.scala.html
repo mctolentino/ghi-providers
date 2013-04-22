@@ -1,0 +1,29 @@
+@(user:User, member:Member, form:Form[Members.SearchMember], question:SecurityQuestion)(tabs: Html)(tabContent: Html)
+
+@main(user, form, "GHI+ Client Portal - Member Information") {
+
+<div id="tabContaier">
+    <ul class="tabs">
+        @tabs
+    </ul>
+    
+    <div class="tabDetails">
+        @tabContent
+    </div><!-- //tab Details -->
+</div><!-- //Tab Container -->
+
+<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.4.2.min.js")"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".tabContents").hide(); // Hide all tab conten divs by default
+        $(".tabContents:first").show(); // Show the first div of tab content by default
+        $("#tabContaier ul li a").click(function(){ //Fire the click event
+            var activeTab = $(this).attr("href"); // Catch the click link
+            $("#tabContaier ul li a").removeClass("active"); // Remove pre-highlighted link
+            $(this).addClass("active"); // set clicked link to highlight state
+            $(".tabContents").hide(); // hide currently visible tab content div
+            $(activeTab).fadeIn(); // show the target tab content div by matching clicked link.
+        });
+    });
+</script>
+}
