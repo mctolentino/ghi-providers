@@ -13,3 +13,10 @@ db.default.pass=ghi_2fa
 
 SMS Gateway Details
 sms.gateway.base_url="http://192.168.1.54:8080/sms-gw/ws"
+
+To up in .33:
+go to /usr/lib/ghi2fa-1.0
+kill existing process if exists (PID found inside RUNNING_PID file)
+delete RUNNING_PID if exists
+delete nohup.out
+run command: nohup ./start -Dhttp.port=7654 &
