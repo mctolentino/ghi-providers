@@ -29,22 +29,27 @@ public class Global extends GlobalSettings {
         initializeVerificationDetails();
     }
 
-    @SuppressWarnings("deprecation")
     private static void initializeVerificationDetails() {
 
-        Member m = Member.find.byId(1);
+	    Member m = Member.find.byId(0);
+        m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
+        m.update();
+	    m = Member.find.byId(1);
         m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
         m.update();
         m = Member.find.byId(2);
-        m.verificationDetails = new VerificationDetails(m, "Y", new Date(2013 - 1900, 03, 15), "Y", new Date(2013 - 1900, 12, 17));
+        m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
         m.update();
         m = Member.find.byId(3);
         m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
         m.update();
         m = Member.find.byId(4);
-        m.verificationDetails = new VerificationDetails(m, "F", new Date(2013 - 1900, 03, 15), "N", null);
+        m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
         m.update();
         m = Member.find.byId(5);
+        m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
+        m.update();
+		m = Member.find.byId(6);
         m.verificationDetails = new VerificationDetails(m, "N", null, "N", null);
         m.update();
 

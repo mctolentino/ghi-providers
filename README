@@ -1,11 +1,15 @@
 GHI Providers
 =====================================
-
 Web Application to search and authorize members. 
 To be used by GHI Providers to verify membership.
 
 
+Application details can be found inside conf/application.conf file.
 
-#This file will be packaged with your application, when using `play dist`.
+Database Details:
+db.default.url="jdbc:oracle:thin:@192.168.1.54:1521/XE"
+db.default.user=ghi_2fa
+db.default.pass=ghi_2fa
 
-
+SMS Gateway Details
+sms.gateway.base_url="http://192.168.1.54:8080/sms-gw/ws"
