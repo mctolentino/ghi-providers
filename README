@@ -20,3 +20,5 @@ kill existing process if exists (PID found inside RUNNING_PID file)
 delete RUNNING_PID if exists
 delete nohup.out
 run command: nohup ./start -Dhttp.port=7654 &
+
+If app not running: make sure correct permissions are set.
